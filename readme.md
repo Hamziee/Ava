@@ -1,6 +1,7 @@
 <div align="center">
 
-# Mia Discord Bot
+<img src="https://github.com/Hamziee/Mia/blob/main/readme.jpg?raw=true" style="height: 500px;align: center;" alt="Mia"/>
+# Mia
 ###### An Open-Source Discord Bot! 
 
 </div>
