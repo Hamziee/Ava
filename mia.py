@@ -34,6 +34,8 @@ class Client(commands.Bot):
         print(prfx + " Python Version " + Fore.YELLOW + str(platform.python_version()))
         synced = await self.tree.sync()
         print(prfx + " Slash CMDs Synced " + Fore.YELLOW + str(len(synced)) + " Commands")
+        await self.change_presence(activity=discord.Game(name=config.STATUS))
+        print(prfx + " Discord " + Fore.YELLOW + str(len(synced)) + " Presence(s) loaded.")
 
 client = Client()
 
