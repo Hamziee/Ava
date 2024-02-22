@@ -17,7 +17,7 @@ class ping(commands.Cog):
                 description='🤔')
             await interaction.response.send_message(embed=embed)
             end = time.time()
-            duration = round((end - start) * 1000)
+            duration = round((end - start) * 100)
             embed = discord.Embed(
                 title="Pong!", 
                 description=f"Latency: {duration}ms. \n\n**What does this mean?**\n Latency is calculated to measure the responsiveness and performance of the bot and the Discord server. It helps users assess the speed at which the bot can send and receive messages, providing valuable feedback on its operational efficiency. \n\nThis information is crucial for bot developers and users to ensure that the bot is functioning optimally and to identify any potential issues that may affect its performance.", 
