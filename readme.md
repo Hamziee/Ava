@@ -1,4 +1,9 @@
+<div align="center">
+
 # Mia Discord Bot
+###### An Open-Source Discord Bot! 
+
+</div>
 
 ## Introduction
 Introducing Mia, the versatile and open-source Discord bot designed to serve all your needs effortlessly. With Mia by your side, managing your server becomes a breeze. From moderation tools to fun utilities, Mia has it all covered. Embrace simplicity and functionality with Mia, the reliable companion for any Discord community.
