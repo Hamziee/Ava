@@ -3,13 +3,25 @@ from discord.ext import commands
 from colorama import Back, Fore, Style
 import time
 import platform
+import config
+import os
 
 class Client(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=commands.when_mentioned_or('$'), intents=discord.Intents().all())
+        super().__init__(command_prefix=commands.when_mentioned_or(config.PREFIX), intents=discord.Intents().all())
 
-        self.cogslist = ["cogs.ping"]
+        def list_cogs_files(directory):
+            cog_files = []
+            for root, dirs, files in os.walk(directory):
+                for file in files:
+                    if file.endswith(".py"):
+                        cog_files.append(f"{config.COMMANDS_DIRECTORY}." + file[:-3])
+            return cog_files
 
+        cogs_directory = config.COMMANDS_DIRECTORY
+        cog_files = list_cogs_files(cogs_directory)
+        self.cogslist = cog_files
+    
     async def setup_hook(self):
       for ext in self.cogslist:
         await self.load_extension(ext)
@@ -22,8 +34,6 @@ class Client(commands.Bot):
         print(prfx + " Python Version " + Fore.YELLOW + str(platform.python_version()))
         synced = await self.tree.sync()
         print(prfx + " Slash CMDs Synced " + Fore.YELLOW + str(len(synced)) + " Commands")
-
-import config
 
 client = Client()
 
