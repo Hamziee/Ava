@@ -431,15 +431,15 @@ class music(commands.Cog):
                  .set_footer(text='Viewing page {}/{}'.format(page, pages)))
         await ctx.send(embed=embed)
 
-    @commands.command(name='shuffle')
-    async def _shuffle(self, ctx: commands.Context):
-        """Shuffles the queue."""
+    # @commands.command(name='shuffle')
+    # async def _shuffle(self, ctx: commands.Context):
+    #     """Shuffles the queue."""
 
-        if len(ctx.voice_state.songs) == 0:
-            return await ctx.send('Empty queue.')
+    #     if len(ctx.voice_state.songs) == 0:
+    #         return await ctx.send('Empty queue.')
 
-        ctx.voice_state.songs.shuffle()
-        await ctx.message.add_reaction('✅')
+    #     ctx.voice_state.songs.shuffle()
+    #     await ctx.message.add_reaction('✅')
 
     @commands.command(name='remove')
     async def _remove(self, ctx: commands.Context, index: int):
@@ -451,19 +451,19 @@ class music(commands.Cog):
         ctx.voice_state.songs.remove(index - 1)
         await ctx.message.add_reaction('✅')
 
-    @commands.command(name='loop')
-    async def _loop(self, ctx: commands.Context):
-        """Loops the currently playing song.
+    # @commands.command(name='loop')
+    # async def _loop(self, ctx: commands.Context):
+    #     """Loops the currently playing song.
 
-        Invoke this command again to unloop the song.
-        """
+    #     Invoke this command again to unloop the song.
+    #     """
 
-        if not ctx.voice_state.is_playing:
-            return await ctx.send('Nothing being played at the moment.')
+    #     if not ctx.voice_state.is_playing:
+    #         return await ctx.send('Nothing being played at the moment.')
 
-        # Inverse boolean value to loop and unloop.
-        ctx.voice_state.loop = not ctx.voice_state.loop
-        await ctx.message.add_reaction('✅')
+    #     # Inverse boolean value to loop and unloop.
+    #     ctx.voice_state.loop = not ctx.voice_state.loop
+    #     await ctx.message.add_reaction('✅')
 
     @commands.command(name='play', aliases=['p'])
     async def _play(self, ctx: commands.Context, *, search: str):
@@ -473,7 +473,6 @@ class music(commands.Cog):
         other songs finished playing.
 
         This command automatically searches from various sites if no URL is provided.
-        A list of these sites can be found here: https://rg3.github.io/youtube-dl/supportedsites.html
         """
 
         if not ctx.voice_state.voice:
