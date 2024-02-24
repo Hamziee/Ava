@@ -3,6 +3,8 @@ from discord.ext import commands
 from discord import app_commands
 import config
 prefix = config.PREFIX
+MIA_VERSION = config.MIA_VERSION
+
 
 class help(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -28,10 +30,10 @@ class help(commands.Cog):
                                 **{prefix}skip, {prefix}s, {prefix}sk** - Vote to skip a song. The requester can automatically skip.
                                 **{prefix}queue, {prefix}q** - Shows the player's queue. You can optionally specify the page to show. Each page contains 10 songs.
                                 **{prefix}remove** - Removes a song from the queue at a given index.
-                                **{prefix}play, {prefix}p** - Plays a song.""", inline=True)
+                                **{prefix}play, {prefix}p** - Plays a song.""", inline=False)
                 embed.add_field(name='Other commands', value=
                                 f""" Run **/help** for all the other commands.""", inline=False)
-                embed.set_footer(text="Mia | version: Public Beta 1", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+                embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
                 await interaction.response.send_message(embed=embed)
             except Exception as e:
                 print(e)
@@ -44,10 +46,10 @@ class help(commands.Cog):
                     description="Here is some information about my commands :)")
                 embed.add_field(name='General', value=
                                 f"""**/help** - Shows up this.
-                                **/about** - Some information about me!""", inline=True)
+                                **/about** - Some information about me!""", inline=False)
                 embed.add_field(name='Music commands', value=
-                                f""" Run **/help music** for information about all my music commands.""", inline=True)
-                embed.set_footer(text="Mia | version: Public Beta 1", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+                                f""" Run **/help music** for information about all my music commands.""", inline=False)
+                embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
                 await interaction.response.send_message(embed=embed)
             except Exception as e:
                 print(e)
