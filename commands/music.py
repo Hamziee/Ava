@@ -316,7 +316,7 @@ class music(commands.Cog):
 
         ctx.voice_state.voice = await destination.connect()
 
-    @commands.command(name='leave', aliases=['disconnect', 'dc'])
+    @commands.command(name='leave', aliases=['l', 'disconnect'])
     # @commands.has_permissions(manage_guild=True)
     async def _leave(self, ctx: commands.Context):
         """Clears the queue and leaves the voice channel."""
@@ -360,7 +360,7 @@ class music(commands.Cog):
             ctx.voice_state.voice.pause()
             await ctx.message.add_reaction('⏸️')
 
-    @commands.command(name='resume', aliases=['re'])
+    @commands.command(name='resume', aliases=['r'])
     # @commands.has_permissions(manage_guild=True)
     async def _resume(self, ctx: commands.Context):
         """Resumes a currently paused song."""
@@ -369,7 +369,7 @@ class music(commands.Cog):
             ctx.voice_state.voice.resume()
             await ctx.message.add_reaction('▶️')
 
-    @commands.command(name='stop', aliases=['close'])
+    @commands.command(name='stop', aliases=['st', 'close'])
     # @commands.has_permissions(manage_guild=True)
     async def _stop(self, ctx: commands.Context):
         """Stops playing song and clears the queue."""
@@ -380,7 +380,7 @@ class music(commands.Cog):
             ctx.voice_state.voice.stop()
             await ctx.message.add_reaction('⏹')
 
-    @commands.command(name='skip', aliases=['sk'])
+    @commands.command(name='skip', aliases=['s', 'sk'])
     async def _skip(self, ctx: commands.Context):
         """Vote to skip a song. The requester can automatically skip.
         3 skip votes are needed for the song to be skipped.
