@@ -18,7 +18,7 @@ class help(commands.Cog):
             try:
                 embed = discord.Embed(
                     color=discord.Colour.blurple(),
-                    title="Hi I'm Mia! <:CatBlush:1210004576082853939>",
+                    title="Hi I'm Mia! <:MIA_CatBlush:1210004576082853939>",
                     description="Here is some Information about my music commands :)")
                 embed.add_field(name='Music', value=
                                 f"""**{prefix}join** - Joins a voice channel.
@@ -42,11 +42,12 @@ class help(commands.Cog):
             try:
                 embed = discord.Embed(
                     color=discord.Colour.blurple(),
-                    title="Hi I'm Mia! <:CatBlush:1210004576082853939>",
+                    title="Hi I'm Mia! <:MIA_CatBlush:1210004576082853939>",
                     description="Here is some information about my commands :)")
                 embed.add_field(name='General', value=
                                 f"""**/help** - Shows up this.
-                                **/about** - Some information about me!""", inline=False)
+                                **/about** - Some information about me!
+                                **/chat** - Chat with my AI!""", inline=False)
                 embed.add_field(name='Music commands', value=
                                 f""" Run **/help music** for information about all my music commands.""", inline=False)
                 embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")

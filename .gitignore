@@ -1,16 +1,11 @@
 # Scripts which are not done yet:
-commands/ChatAI.py
 
 # Closed Source Code:
 # AI funcionality is currently closed source, this is part of another project called Ava.
-AvaAI
-AvaAI.py
-Ava
-Ava.py
-commands/AvaAI
-commands/AvaAI.py
-commands/Ava
-commands/Ava.py
+MiaAI
+MiaAI.py
+commands/MiaAI
+commands/MiaAI.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

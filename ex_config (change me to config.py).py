@@ -1,7 +1,7 @@
-MIA_VERSION='v0.1.3-b' # Do not change this, it will help with troubleshooting later
+MIA_VERSION='v0.1.4-b' # Do not change this, it will help with troubleshooting later
 
-PREFIX = '$' # deprecated only used for admin or music commands.
-OWNER_ID = 496673945211240462 # copied from my old bot, unused for now
+PREFIX = '$' # deprecated, only used for admin or music commands.
+OWNER_ID = 496673945211240462 # used for admin commands and ChatAI recognition
 PERMISSION_DENIED = 'You do not have permission to run this command.' # copied from my old bot, unused for now
 STATUS = MIA_VERSION # Want a custom status? Replace it with: STATUS = 'your status here'
 TOKEN = 'Put your Discord bot token here.'
