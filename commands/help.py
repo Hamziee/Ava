@@ -21,8 +21,7 @@ class help(commands.Cog):
                     title="Hi I'm Mia! <:MIA_CatBlush:1210004576082853939>",
                     description="Here is some Information about my music commands :)")
                 embed.add_field(name='Music', value=
-                                f"""**{prefix}join** - Joins a voice channel.
-                                **{prefix}leave, {prefix}l, {prefix}disconnect** - Clears the queue and leaves the voice channel.
+                                f"""**{prefix}leave, {prefix}l, {prefix}disconnect** - Clears the queue and leaves the voice channel.
                                 **{prefix}now, {prefix}current, {prefix}playing** - Displays the currently playing song.
                                 **{prefix}pause, {prefix}pa** - Pauses the currently playing song.
                                 **{prefix}resume, {prefix}r** - Resumes a currently paused song.
