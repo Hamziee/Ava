@@ -47,7 +47,7 @@ class chat(commands.Cog):
                     description="Mia is thinking... <:MIA_CuteThink:1211038099086512199>")
                 embed.set_footer(text=f"Mia | version: {config.MIA_VERSION} | Keep in mind that Mia can make mistakes.", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
                 await interaction.response.send_message(embed=embed)
-                response = await ChatReponseHamza(message)
+                response = await ChatReponse(message)
                 try:
                     embed = discord.Embed(
                         color=discord.Colour.blurple(),
