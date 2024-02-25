@@ -28,7 +28,7 @@ Introducing Mia, the versatile and open-source Discord bot designed to serve all
 We welcome contributions to enhance Mia's functionality. Feel free to fork the repository, make your changes, and submit a pull request.
 
 ## License
-Mia is licensed under the [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause), allowing for free use and modification; but requires our copyright to be included and our names not be used.
+Mia is licensed under the [BSD 3-Clause](https://github.com/Hamziee/Mia/blob/main/LICENSE), allowing for free use and modification; but requires our copyright to be included and our names not be used.
 
 ## Support
 For any inquiries or assistance, join our Discord server or create an issue on the GitHub repository.
