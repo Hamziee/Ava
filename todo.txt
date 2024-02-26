@@ -1,1 +1,3 @@
+fix help command instead of typing make buttons
+
 add make embeds command
