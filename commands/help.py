@@ -31,7 +31,7 @@ class help(commands.Cog):
                                 **{prefix}remove** - Removes a song from the queue at a given index.
                                 **{prefix}play, {prefix}p** - Plays a song.""", inline=False)
                 embed.add_field(name='Other commands', value=
-                                f""" Run **/help** for all the other commands.""", inline=False)
+                                """ Run **/help** for all the other commands.""", inline=False)
                 embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
                 await interaction.response.send_message(embed=embed)
             except Exception as e:
@@ -44,11 +44,11 @@ class help(commands.Cog):
                     title="Hi I'm Mia! <:MIA_CatBlush:1210004576082853939>",
                     description="Here is some information about my commands :)")
                 embed.add_field(name='General', value=
-                                f"""**/help** - Shows up this.
+                                """**/help** - Shows up this.
                                 **/about** - Some information about me!
                                 **/chat** - Chat with my AI!""", inline=False)
                 embed.add_field(name='Music commands', value=
-                                f""" Run **/help music** for information about all my music commands.""", inline=False)
+                                """ Run **/help music** for information about all my music commands.""", inline=False)
                 embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
                 await interaction.response.send_message(embed=embed)
             except Exception as e:
