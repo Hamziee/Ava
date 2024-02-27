@@ -28,7 +28,7 @@ class Buttons(discord.ui.View):
     async def music_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         embed = discord.Embed(
                 color=discord.Colour.blurple(),
-                title="Music | General Commands",
+                title="Music | Music Commands",
                 description="Here is some Information about my music commands :)")
         embed.add_field(name=f'{PREFIX}leave, {PREFIX}l, {PREFIX}disconnect', value='Clears the queue and leaves the voice channel.', inline=False)
         embed.add_field(name=f'{PREFIX}now, {PREFIX}current, {PREFIX}playing', value='Displays the currently playing song.', inline=False)
