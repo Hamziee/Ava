@@ -9,7 +9,6 @@ class Buttons(discord.ui.View):
     def __init__(self, *, timeout=180):
         super().__init__(timeout=timeout)
 
-        icon = 'https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp'
     
     # General
     @discord.ui.button(label="General",style=discord.ButtonStyle.primary)
@@ -21,12 +20,12 @@ class Buttons(discord.ui.View):
         embed.add_field(name='/help', value='Shows up this.', inline=False)
         embed.add_field(name='/about', value='Some information about me!', inline=False)
         embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
-        embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url=icon)
+        embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
     # Music
-    @discord.ui.button(label="Music",style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Music",style=discord.ButtonStyle.primary)
     async def music_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         embed = discord.Embed(
                 color=discord.Colour.blurple(),
@@ -41,7 +40,7 @@ class Buttons(discord.ui.View):
         embed.add_field(name=f'{PREFIX}queue, {PREFIX}q', value='Shows the queue. You can optionally specify the page to show. Each page contains 10 songs.', inline=False)
         embed.add_field(name=f'{PREFIX}remove', value='Removes a song from the queue at a given index.', inline=False)
         embed.add_field(name=f'{PREFIX}play, {PREFIX}p', value='Plays a song.', inline=False)
-        embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url=icon)
+        embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
@@ -55,7 +54,7 @@ class help(commands.Cog):
             color=discord.Colour.blurple(),
             title="Hi I'm Mia! <:MIA_CatBlush:1210004576082853939>",
             description="Choose a category below.")
-        embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url=icon)
+        embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
         await interaction.response.send_message(embed=embed, view=Buttons())
 
 
