@@ -5,8 +5,6 @@ import time
 import platform
 try:
     import config
-    # test = config.COMMANDS_DIRECTORY
-    # print("Commands directory:" + test)
 except:
     print(Fore.RED + Style.BRIGHT + "Config file could not be found, please refer to the setup instructions in the readme.md file!" + Fore.RESET)
     exit()
