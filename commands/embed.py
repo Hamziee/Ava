@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+import config
 
 class embed(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -78,8 +79,12 @@ class embed(commands.Cog):
                 color=embed_color,
                 title=title,
                 description=description)
-            await interaction.response.send_message(content='Embed created, deleting in 5 seconds...', ephemeral=True, delete_after=5)
-            await interaction.channel.send(embed=embed)
+            if interaction.user.id == config.OWNER_ID:
+                # admin version does not show slash command used
+                await interaction.response.send_message(content='Embed created, deleting in 5 seconds...', ephemeral=True, delete_after=5)
+                await interaction.channel.send(embed=embed)
+            else:
+                await interaction.response.send_message(embed=embed)
         except Exception as e:
             print(e)
             await interaction.response.send_message(content='Error occured.')
