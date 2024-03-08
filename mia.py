@@ -3,7 +3,13 @@ from discord.ext import commands
 from colorama import Back, Fore, Style
 import time
 import platform
-import config
+try:
+    import config
+    # test = config.COMMANDS_DIRECTORY
+    # print("Commands directory:" + test)
+except:
+    print(Fore.RED + Style.BRIGHT + "Config file could not be found, please refer to the setup instructions in the readme.md file!" + Fore.RESET)
+    exit()
 import os
 
 class Client(commands.Bot):
