@@ -1,0 +1,45 @@
+
+
+
+# ███╗░░██╗░█████╗░████████╗  ██████╗░░█████╗░███╗░░██╗███████╗  ██╗░░░██╗███████╗████████╗
+# ████╗░██║██╔══██╗╚══██╔══╝  ██╔══██╗██╔══██╗████╗░██║██╔════╝  ╚██╗░██╔╝██╔════╝╚══██╔══╝
+# ██╔██╗██║██║░░██║░░░██║░░░  ██║░░██║██║░░██║██╔██╗██║█████╗░░  ░╚████╔╝░█████╗░░░░░██║░░░
+# ██║╚████║██║░░██║░░░██║░░░  ██║░░██║██║░░██║██║╚████║██╔══╝░░  ░░╚██╔╝░░██╔══╝░░░░░██║░░░
+# ██║░╚███║╚█████╔╝░░░██║░░░  ██████╔╝╚█████╔╝██║░╚███║███████╗  ░░░██║░░░███████╗░░░██║░░░
+# ╚═╝░░╚══╝░╚════╝░░░░╚═╝░░░  ╚═════╝░░╚════╝░╚═╝░░╚══╝╚══════╝  ░░░╚═╝░░░╚══════╝░░░╚═╝░░░
+
+
+import discord
+from discord.ext import commands
+from discord import app_commands
+import time
+
+class ping(commands.Cog):
+    def __init__(self, client: commands.Bot):
+        self.client = client
+
+    @app_commands.command(name="embed", description="Send an embed message.")
+    @app_commands.rename(title='title')
+    @app_commands.describe(title='Specify the title of the embed.')
+    @app_commands.rename(description='description')
+    @app_commands.describe(description='Specify the description of the embed.')
+    @app_commands.describe(color='Specify the color of the embed.')
+    @app_commands.choices(fruits=[
+        Choice(name='blue', value=1),
+        Choice(name='banana', value=2),
+        Choice(name='cherry', value=3),
+    ])
+    async def ping(self, interaction: discord.Interaction, e_title: str, e_description: str):
+        try:
+            start = time.time()
+            embed = discord.Embed(
+                color=discord.Colour.blurple(),
+                title=e_title,
+                description=e_description)
+            await interaction.response.send_message(embed=embed)
+        except Exception as e:
+            print(e)
+            await interaction.followup.send(content='Error occured.')
+
+async def setup(client:commands.Bot) -> None:
+    await client.add_cog(ping(client))
