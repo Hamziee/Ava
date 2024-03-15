@@ -19,6 +19,7 @@ class Buttons(discord.ui.View):
             description="Here is some information about my commands :)")
         embed.add_field(name='/help', value='Shows up this.', inline=False)
         embed.add_field(name='/about', value='Some information about me!', inline=False)
+        embed.add_field(name='/embed', value='Make an embed message.', inline=False)
         embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
         embed.set_footer(text=f"Mia | version: {MIA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
         await interaction.response.defer()
