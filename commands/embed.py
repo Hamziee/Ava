@@ -73,21 +73,16 @@ class embed(commands.Cog):
         else:
             # Default color if the color name is not found
             embed_color = discord.Colour.blurple()
-
-        try:
+        if interaction.permissions.manage_guild is True:
             embed = discord.Embed(
                 color=embed_color,
                 title=title,
                 description=description)
-            if interaction.user.id == config.OWNER_ID:
-                # admin version does not show slash command used
-                await interaction.response.send_message(content='Embed created, deleting in 5 seconds...', ephemeral=True, delete_after=5)
-                await interaction.channel.send(embed=embed)
-            else:
-                await interaction.response.send_message(embed=embed)
-        except Exception as e:
-            print(e)
-            await interaction.response.send_message(content='Error occured.')
+            await interaction.response.send_message(content='Embed created, deleting in 5 seconds...', ephemeral=True, delete_after=5)
+            await interaction.channel.send(embed=embed)
+        else:
+            await interaction.response.send_message(content='You need the `Manage Server` permission to make embeds.', ephemeral=True)
+            
 
 async def setup(client:commands.Bot) -> None:
     await client.add_cog(embed(client))
