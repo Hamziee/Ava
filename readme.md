@@ -1,6 +1,16 @@
 <div align="center">
 <img src="https://github.com/Hamziee/Mia/blob/main/readme.jpg?raw=true" style="height: 390px;align: center;" alt="Mia"/>
 
+<br><br>
+
+<div align="center">
+
+[![License](https://img.shields.io/badge/License-Apache--3.0-blue)](#license)
+[![Issues - daytona](https://img.shields.io/github/issues/Hamziee/Mia)](https://github.com/Hamziee/Mia/issues)
+![GitHub Release](https://img.shields.io/github/v/release/Hamziee/Mia)
+
+</div>
+
 # Mia
 ###### An Open-Source Discord Bot! 
 
