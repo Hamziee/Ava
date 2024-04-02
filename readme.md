@@ -5,7 +5,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache--3.0-blue)](#license)
 [![Issues - daytona](https://img.shields.io/github/issues/Hamziee/Mia)](https://github.com/Hamziee/Mia/issues)
-![GitHub Release](https://img.shields.io/github/v/release/Hamziee/Mia)
+[![GitHub Release](https://img.shields.io/github/v/release/Hamziee/Mia)](https://github.com/Hamziee/Mia/releases)
 
 </div>
 
