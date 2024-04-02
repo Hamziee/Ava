@@ -1,8 +1,6 @@
 <div align="center">
 <img src="https://github.com/Hamziee/Mia/blob/main/readme.jpg?raw=true" style="height: 390px;align: center;" alt="Mia"/>
 
-<br><br>
-
 <div align="center">
 
 [![License](https://img.shields.io/badge/License-Apache--3.0-blue)](#license)
