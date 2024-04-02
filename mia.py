@@ -3,6 +3,7 @@ from discord.ext import commands
 from colorama import Back, Fore, Style
 import time
 import platform
+from cogwatch import watch
 try:
     import config
 except:
@@ -30,6 +31,7 @@ class Client(commands.Bot):
       for ext in self.cogslist:
         await self.load_extension(ext)
 
+    @watch(path=config.COMMANDS_DIRECTORY, preload=True)
     async def on_ready(self):
         prfx = (Back.BLACK + Fore.GREEN + time.strftime("%H:%M:%S UTC", time.gmtime()) + Back.RESET + Fore.WHITE + Style.BRIGHT)
         print(prfx + " Logged in as " + Fore.YELLOW + self.user.name)
@@ -40,6 +42,62 @@ class Client(commands.Bot):
         print(prfx + " Slash CMDs Synced " + Fore.YELLOW + str(len(synced)) + " Commands")
         await self.change_presence(activity=discord.Game(name=config.STATUS))
         print(prfx + " Discord " + Fore.YELLOW + "Presence(s) loaded.")
+
+    # Load, Reload and Unload commands
+    # Load command
+    @commands.command()
+    async def load(self, ctx, cog: str):
+        if ctx.message.author.id == config.OWNER_ID:
+            try:
+                await self.load_extension(f"{config.COMMANDS_DIRECTORY}.{cog}")
+                await ctx.reply(f"Loaded {cog}.py cog.")
+            except Exception as e:
+                print(e)
+                await ctx.reply("Error.")
+        else:
+            await ctx.reply("Insufficient permissions! Only the developer(s) can load commands.")
+
+    # Reload command
+    @commands.command()
+    async def reload(self, ctx, cog: str):
+        if ctx.message.author.id == config.OWNER_ID:
+            try:
+                await self.reload_extension(f"{config.COMMANDS_DIRECTORY}.{cog}")
+                await ctx.reply(f"Reloaded {cog}.py cog.")
+            except Exception as e:
+                print(e)
+                await ctx.reply("Error.")
+        else:
+            await ctx.reply("Insufficient permissions! Only the developer(s) can reload commands.")
+
+    # Reload all command
+    @commands.command()
+    async def reloadall(self, ctx):
+        if ctx.message.author.id == config.OWNER_ID:
+            try:
+                for ext in self.cogslist:
+                    await self.load_extension(ext)
+                await ctx.reply("Reloaded all commands.")
+            except Exception as e:
+                print(e)
+                await ctx.reply("Error.")
+        else:
+            await ctx.reply("Insufficient permissions! Only the developer(s) can reload commands.")
+
+    # Unload command
+    @commands.command()
+    async def unload(self, ctx, cog: str):
+        if ctx.message.author.id == config.OWNER_ID:
+            try:
+                await self.unload_extension(f"{config.COMMANDS_DIRECTORY}.{cog}")
+                await ctx.reply(f"Unloaded {cog}.py cog.")
+            except Exception as e:
+                print(e)
+                await ctx.reply("Error.")
+        else:
+            await ctx.reply("Insufficient permissions! Only the developer(s) can unload commands.")
+
+    #### #### #### #### ####
 
 client = Client()
 

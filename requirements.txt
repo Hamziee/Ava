@@ -2,4 +2,5 @@ discord.py==2.3.2
 colorama==0.4.6
 PyNaCl==1.5.0
 async-timeout==4.0.3
-yt_dlp==2023.12.30
+yt_dlp==2024.3.10
+cogwatch==3.3.1
