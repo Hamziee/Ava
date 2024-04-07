@@ -3,7 +3,7 @@
 
 <div align="center">
 
-[![License](https://img.shields.io/badge/License-Apache--3.0-blue)](#license)
+[![License](https://img.shields.io/badge/LICENSE-BSD--3--Clause-blue)](#license)
 [![Issues - daytona](https://img.shields.io/github/issues/Hamziee/Mia)](https://github.com/Hamziee/Mia/issues)
 [![GitHub Release](https://img.shields.io/github/v/release/Hamziee/Mia)](https://github.com/Hamziee/Mia/releases)
 
