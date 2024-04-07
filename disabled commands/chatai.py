@@ -1,13 +1,13 @@
 
 # IMPORTANT NOTE:
-# MiaAI is closed source for now. ChatAI will NOT work for you unless you make your function for this command to process! If you do not know what that means then don't bother getting this to work, I might add an example script to use OpenAI in the future.
+# AvaAI is closed source for now. ChatAI will NOT work for you unless you make your function for this command to process! If you do not know what that means then don't bother getting this to work, I might add an example script to use OpenAI in the future.
 # This script calls for ChatReponse() to respond with a message.
 
 import discord
 from discord.ext import commands
 from discord import app_commands
 import config
-from MiaAI import *
+from AvaAI import *
 
 class chat(commands.Cog):
     def __init__(self, client: commands.Bot):
