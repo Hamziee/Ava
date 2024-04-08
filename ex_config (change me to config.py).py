@@ -1,4 +1,4 @@
-MIA_VERSION='v0.1.9-b' # Do not change this, it will help with troubleshooting later
+AVA_VERSION='v0.1.9-b' # Do not change this, it will help with troubleshooting later
 
 PREFIX = '$' # deprecated, only used for admin and music commands.
 OWNER_ID = 496673945211240462 # used for admin commands and ChatAI recognition.
