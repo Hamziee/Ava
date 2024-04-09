@@ -3,6 +3,7 @@
 
 <div align="center">
 
+![Add me](https://img.shields.io/badge/Add_Me_To_Your_Server-A?style=for-the-badge&color=blue&link=https%3A%2F%2Fdiscord.com%2Foauth2%2Fauthorize%3Fclient_id%3D1209925239652356147%26permissions%3D70368744177655%26scope%3Dbot)
 [![License](https://img.shields.io/badge/LICENSE-BSD--3--Clause-blue)](#license)
 [![Issues - daytona](https://img.shields.io/github/issues/Hamziee/Ava)](https://github.com/Hamziee/Ava/issues)
 [![GitHub Release](https://img.shields.io/github/v/release/Hamziee/Ava)](https://github.com/Hamziee/Ava/releases)
