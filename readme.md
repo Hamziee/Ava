@@ -7,7 +7,7 @@
 [![Issues - daytona](https://img.shields.io/github/issues/Hamziee/Ava)](https://github.com/Hamziee/Ava/issues)
 [![GitHub Release](https://img.shields.io/github/v/release/Hamziee/Ava)](https://github.com/Hamziee/Ava/releases)
 <br>
-![Add me](https://img.shields.io/badge/Add_Me_To_Your_Server-A?style=for-the-badge&color=blue&link=https%3A%2F%2Fdiscord.com%2Foauth2%2Fauthorize%3Fclient_id%3D1209925239652356147%26permissions%3D70368744177655%26scope%3Dbot)
+[![Add me](https://img.shields.io/badge/Add_Me_To_Your_Server-A?style=for-the-badge&color=blue)](https://discord.com/oauth2/authorize?client_id=1209925239652356147&permissions=70368744177655&scope=bot)
 
 </div>
 
