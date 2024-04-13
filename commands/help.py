@@ -25,6 +25,19 @@ class Buttons(discord.ui.View):
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
+    # Fun
+    @discord.ui.button(label="Fun",style=discord.ButtonStyle.primary)
+    async def fun_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        embed = discord.Embed(
+            color=discord.Colour.blurple(),
+            title="Ava | Enjoyable Commands",
+            description="Here is some information about my commands :)")
+        embed.add_field(name='/cats', value='Get your daily dose of cat pictures!', inline=False)
+        embed.add_field(name='/dogs', value='Get your daily dose of dog pictures!', inline=False)
+        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+        await interaction.response.defer()
+        await interaction.edit_original_response(embed=embed, view=Buttons())
+
     # Music
     @discord.ui.button(label="Music",style=discord.ButtonStyle.primary)
     async def music_button(self, interaction: discord.Interaction, button: discord.ui.Button):
