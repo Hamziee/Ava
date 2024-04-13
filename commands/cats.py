@@ -3,7 +3,6 @@ from discord.ext import commands
 from discord import app_commands
 import requests
 from datetime import datetime
-import random
 
 class cats(commands.Cog):
     def __init__(self, client: commands.Bot):
