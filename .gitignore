@@ -2,10 +2,10 @@
 
 # Closed Source Code:
 # AI funcionality is currently closed source, this is part of another project called MiaAI.
-MiaAI
-MiaAI.py
-commands/MiaAI
-commands/MiaAI.py
+AvaAI
+AvaAI.py
+commands/AvaAI
+commands/AvaAI.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
