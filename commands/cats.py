@@ -9,7 +9,7 @@ class cats(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @app_commands.command(name="cats", description="Get your daily dose of pictures and gifs of cats :)")
+    @app_commands.command(name="cats", description="Get your daily dose of cats :)")
     async def cats(self, interaction: discord.Interaction):
         try:
             now = datetime.now()
