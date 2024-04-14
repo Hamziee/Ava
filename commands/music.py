@@ -251,6 +251,7 @@ class VoiceState:
             self.voice.stop()
 
     async def stop(self):
+        
         self.songs.clear()
 
         if self.voice:
@@ -373,7 +374,7 @@ class music(commands.Cog):
     # @commands.has_permissions(manage_guild=True)
     async def _stop(self, ctx: commands.Context):
         """Stops playing song and clears the queue."""
-
+        
         ctx.voice_state.songs.clear()
 
         if ctx.voice_state.is_playing:
@@ -476,6 +477,9 @@ class music(commands.Cog):
         """
 
         if not ctx.voice_state.voice:
+            await ctx.invoke(self._leave)
+            await ctx.invoke(self._join)
+            await ctx.invoke(self._leave)
             await ctx.invoke(self._join)
 
         async with ctx.typing():

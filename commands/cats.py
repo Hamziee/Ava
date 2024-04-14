@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-import requests
+import httpx
 from datetime import datetime
 
 class cats(commands.Cog):
@@ -13,7 +13,8 @@ class cats(commands.Cog):
         try:
             now = datetime.now()
             timestamp = round(datetime.timestamp(now))
-            response = requests.get(f"https://cataas.com/cat?timestamp={timestamp}")
+            async with httpx.AsyncClient() as client:
+                response = await client.get(f"https://cataas.com/cat?timestamp={timestamp}")
             image_url = response.url
 
             embed = discord.Embed(
