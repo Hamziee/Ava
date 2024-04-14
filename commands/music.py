@@ -328,6 +328,7 @@ class music(commands.Cog):
         await ctx.voice_state.stop()
         del self.voice_states[ctx.guild.id]
         await ctx.message.add_reaction('✅')
+        ran = False
 
     @commands.command(name='volume')
     async def _volume(self, ctx: commands.Context, *, volume: int):
