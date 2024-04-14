@@ -476,28 +476,44 @@ class music(commands.Cog):
         This command automatically searches from various sites if no URL is provided.
         """
 
-        # Initialize ran as a global variable
-        global ran
+        # Initialize ran as a per-guild variable
+        if 'ran_dict' not in globals():
+            global ran_dict
+            ran_dict = {}
 
-        # Initialize ran if it's not defined
-        if 'ran' not in globals():
-            ran = False
+        # Initialize ran if it's not defined for the guild
+        if ctx.guild.id not in ran_dict:
+            ran_dict[ctx.guild.id] = False
+
+        print(f"Before checking voice state, ran_dict[{ctx.guild.id}] = {ran_dict[ctx.guild.id]}")
+
+        # Initialize ran as a per-guild variable
+        if 'ran_dict' not in globals():
+            ran_dict = {}
+
+        # Initialize ran if it's not defined for the guild
+        if ctx.guild.id not in ran_dict:
+            ran_dict[ctx.guild.id] = False
+
+        print(f"Before checking voice state, ran_dict[{ctx.guild.id}] = {ran_dict[ctx.guild.id]}")
 
         if not ctx.voice_state.voice:
-            # Use global ran variable here
-            if ran == True:
+            # Use per-guild ran variable here
+            if ran_dict[ctx.guild.id]:
                 import time
                 await ctx.invoke(self._join)
                 time.sleep(0.25)
                 await ctx.invoke(self._leave)
-                ran = False
+                ran_dict[ctx.guild.id] = False
                 await ctx.send('The bot recently left due to inactivity, please rerun your command as we have cleared the previous queue to avoid weird behaviors.')
                 return
             else:
                 await ctx.invoke(self._join)
-                ran = True
-        
-        ran = True
+                ran_dict[ctx.guild.id] = True
+
+        ran_dict[ctx.guild.id] = True  # This line should be moved inside the `if not ctx.voice_state.voice` block
+
+        print(f"After checking voice state, ran_dict[{ctx.guild.id}] = {ran_dict[ctx.guild.id]}")
 
         async with ctx.typing():
             try:
