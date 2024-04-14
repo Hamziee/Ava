@@ -226,7 +226,7 @@ class VoiceState:
                 # the player will disconnect due to performance
                 # reasons.
                 try:
-                    async with timeout(180):  # 3 minutes
+                    async with timeout(180):  # 3 minutes.
                         self.current = await self.songs.get()
                 except asyncio.TimeoutError:
                     self.bot.loop.create_task(self.stop())
@@ -476,11 +476,28 @@ class music(commands.Cog):
         This command automatically searches from various sites if no URL is provided.
         """
 
+        # Initialize ran as a global variable
+        global ran
+
+        # Initialize ran if it's not defined
+        if 'ran' not in globals():
+            ran = False
+
         if not ctx.voice_state.voice:
-            await ctx.invoke(self._leave)
-            await ctx.invoke(self._join)
-            await ctx.invoke(self._leave)
-            await ctx.invoke(self._join)
+            # Use global ran variable here
+            if ran == True:
+                import time
+                await ctx.invoke(self._join)
+                time.sleep(0.25)
+                await ctx.invoke(self._leave)
+                ran = False
+                await ctx.send('The bot recently left due to inactivity, please rerun your command as we have cleared the previous queue to avoid weird behaviors.')
+                return
+            else:
+                await ctx.invoke(self._join)
+                ran = True
+        
+        ran = True
 
         async with ctx.typing():
             try:
