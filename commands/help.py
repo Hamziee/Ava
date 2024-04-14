@@ -32,6 +32,7 @@ class Buttons(discord.ui.View):
             color=discord.Colour.blurple(),
             title="Ava | Enjoyable Commands",
             description="Here is some information about my commands :)")
+        embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
         embed.add_field(name='/cats', value='Get your daily dose of cat pictures!', inline=False)
         embed.add_field(name='/dogs', value='Get your daily dose of dog pictures!', inline=False)
         embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
