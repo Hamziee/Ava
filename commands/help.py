@@ -70,6 +70,19 @@ class help(commands.Cog):
             description="Choose a category below.")
         embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
         await interaction.response.send_message(embed=embed, view=Buttons())
+    
+    @commands.Cog.listener()
+    async def on_message(self, message: discord.Message):
+        if message.author.bot:
+            return
+
+        if self.client.user.mentioned_in(message):
+            embed = discord.Embed(
+                color=discord.Colour.blurple(),
+                title="Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
+                description="Choose a category below.")
+            embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+            await message.channel.send(embed=embed, view=Buttons())
 
 
 async def setup(client:commands.Bot) -> None:
