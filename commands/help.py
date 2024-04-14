@@ -77,11 +77,11 @@ class help(commands.Cog):
         if message.author.bot:
             return
 
-        if self.client.user.mentioned_in(message):
+        if self.client.user.mentioned_in(message) and not (message.mention_everyone):
             embed = discord.Embed(
-                color=discord.Colour.blurple(),
-                title="Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
-                description="Choose a category below.")
+            color=discord.Colour.blurple(),
+            title="Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
+            description="Choose a category below.")
             embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
             await message.channel.send(embed=embed, view=Buttons())
 
