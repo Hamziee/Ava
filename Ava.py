@@ -7,8 +7,7 @@ from cogwatch import watch
 try:
     import config
 except:
-    print(Fore.RED + Style.BRIGHT + "Config file could not be found, please refer to the setup instructions in the readme.md file!" + Fore.RESET)
-    exit()
+    raise ValueError(Fore.RED + Style.BRIGHT + "Config file could not be found, please refer to the setup instructions in the readme.md file!" + Fore.RESET)
 import os
 
 class Client(commands.Bot):
