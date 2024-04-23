@@ -4,10 +4,10 @@
 
 The following versions will receive security updates as needed:
 
-| Version   | Supported          |
-| --------- | ------------------ |
-| 0.2.6-b   | :white_check_mark: |
-| < 0.2.6-b | :x:                |
+| Version      | Supported          |
+| ------------ | ------------------ |
+| 0.2.7-beta   | :white_check_mark: |
+| < 0.2.7-beta | :x:                |
 
 ## Reporting a Vulnerability
 
