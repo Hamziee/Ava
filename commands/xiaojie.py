@@ -13,7 +13,7 @@ class xiaojie(commands.Cog):
     async def xiaojie(self, interaction: discord.Interaction):
         try:
             async with httpx.AsyncClient() as client:
-                response = await client.get("https://api.hamzie.us.to/v1/images/xiaojie")
+                response = await client.get("https://api.hamzie.site/v1/images/xiaojie")
                 response.raise_for_status()
                 data = response.json()
                 image_url = data["link"]
@@ -21,7 +21,7 @@ class xiaojie(commands.Cog):
                     color=discord.Colour.blurple()
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.us.to", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
 
                 await interaction.response.send_message(embed=embed)
         except httpx.HTTPError as http_err:
