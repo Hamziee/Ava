@@ -24,7 +24,6 @@ Introducing Ava, the versatile and open-source Discord bot designed to serve all
 ## Features
 - **Versatile**: Ava offers a wide range of features to cater to all your Discord server needs.
 - **Open-Source**: Built on Python with discord.py, Ava's source code is open for contributions and customization.
-- **Moderation Tools**: Keep your server in check with Ava's comprehensive moderation tools.
 - **Fun Utilities**: Engage your community with fun and interactive utilities provided by Ava.
 
 ## Setup
