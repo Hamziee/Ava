@@ -21,7 +21,7 @@ class Buttons(discord.ui.View):
         embed.add_field(name='/about', value='Some information about me!', inline=False)
         embed.add_field(name='/embed', value='Make an embed message.', inline=False)
         embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
@@ -33,10 +33,12 @@ class Buttons(discord.ui.View):
             title="Ava | Enjoyable Commands",
             description="Here is some information about my commands :)")
         embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
+        embed.add_field(name='/hug', value='Hug your friend/lover!', inline=False)
+        embed.add_field(name='/kiss', value='Kiss your friend/lover!', inline=False)
         embed.add_field(name='/cats', value='Get your daily dose of cat pictures!', inline=False)
         embed.add_field(name='/xiaojie', value='Get your daily dose of xiaojie cat pictures!', inline=False)
         embed.add_field(name='/dogs', value='Get your daily dose of dog pictures!', inline=False)
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
@@ -56,7 +58,7 @@ class Buttons(discord.ui.View):
         embed.add_field(name=f'{PREFIX}queue, {PREFIX}q', value='Shows the queue. You can optionally specify the page to show. Each page contains 10 songs.', inline=False)
         embed.add_field(name=f'{PREFIX}remove', value='Removes a song from the queue at a given index.', inline=False)
         embed.add_field(name=f'{PREFIX}play, {PREFIX}p', value='Plays a song.', inline=False)
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
@@ -70,7 +72,7 @@ class help(commands.Cog):
             color=discord.Colour.blurple(),
             title="Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
             description="Choose a category below.")
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.send_message(embed=embed, view=Buttons())
     
     @commands.Cog.listener()
@@ -83,7 +85,7 @@ class help(commands.Cog):
             color=discord.Colour.blurple(),
             title="Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
             description="Choose a category below.")
-            embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+            embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await message.channel.send(embed=embed, view=Buttons())
 
 

@@ -19,7 +19,7 @@
 ### *Ava is currently a work in progress, and I am working on adding new and exciting features to Ava. Please bear in mind that this is a project of mine that I work on in my free time, so don't expect fast progress.*
 
 ## Introduction
-Introducing Ava, the versatile and open-source Discord bot designed to serve all your needs effortlessly. With Ava by your side, managing your server becomes a breeze. From moderation tools to fun utilities, Ava has it all covered. Embrace simplicity and functionality with Ava, the reliable companion for any Discord community.
+Ava is a versatile, open-source Discord bot designed to effortlessly meet all your entertainment needs. With Ava, entertaining your server members becomes a breeze. From music to fun utilities, Ava has everything covered. Embrace simplicity and functionality with Ava, the reliable companion for any Discord community.
 
 ## Features
 - **Versatile**: Ava offers a wide range of features to cater to all your Discord server needs.

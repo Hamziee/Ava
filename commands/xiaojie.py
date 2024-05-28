@@ -21,7 +21,7 @@ class xiaojie(commands.Cog):
                     color=discord.Colour.blurple()
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url=config.FOOTER_ICON)
 
                 await interaction.response.send_message(embed=embed)
         except httpx.HTTPError as http_err:

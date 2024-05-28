@@ -152,7 +152,7 @@ class Song:
                  .add_field(name='Duration', value=self.source.duration)
                  .add_field(name='Requested by', value=self.requester.mention)
                  .add_field(name='Uploader', value='[{0.source.uploader}]({0.source.uploader_url})'.format(self))
-                 .set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url="https://cdn.discordapp.com/avatars/1209925239652356147/38e76bc9070eb00f2493b6edeab22b33.webp")
+                 .set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
                  # .add_field(name='URL', value='[Click]({0.source.url})'.format(self))
                  .set_thumbnail(url=self.source.thumbnail))
 
