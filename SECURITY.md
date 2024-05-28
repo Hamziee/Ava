@@ -6,8 +6,8 @@ The following versions will receive security updates as needed:
 
 | Version       | Supported          |
 | ------------  | ------------------ |
-| 0.3.0-beta    | :white_check_mark: |
-| < 0.3.0-beta  | :x:                |
+| 0.4.0-beta    | :white_check_mark: |
+| < 0.4.0-beta  | :x:                |
 
 ## Reporting a Vulnerability
 
