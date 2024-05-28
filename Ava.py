@@ -4,11 +4,16 @@ from colorama import Back, Fore, Style
 import time
 import platform
 from cogwatch import watch
+import os
+
 try:
     import config
 except:
     raise ValueError(Fore.RED + Style.BRIGHT + "Config file could not be found, please refer to the setup instructions in the readme.md file!" + Fore.RESET)
-import os
+if config.CONFIG_VERSION != 3:
+    raise ValueError(Fore.RED + Style.BRIGHT + "Config file version is outdated, please use the new config format and try again." + Fore.RESET)
+elif config.TOKEN == 'Put your Discord bot token here.':
+    raise ValueError(Fore.RED + Style.BRIGHT + "Bot token is incorrect, please change it to the correct token in the config file." + Fore.RESET)
 
 class Client(commands.Bot):
     def __init__(self):
