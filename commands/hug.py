@@ -27,11 +27,11 @@ class hug(commands.Cog):
                 if member.id == interaction.user.id:
                     await interaction.response.send_message(content="You can't hug yourself! Here I will give you a big hug! <a:ava_CatCuddle:1244799986600902758>", embed=embed)
                     return
-                if member.bot:
-                    await interaction.response.send_message(content="Bots don't need hugs! But I do, so here is a hug for you! <a:AVA_cats_hug:1244799755960451159>", embed=embed)
-                    return
                 if member.id == config.BOT_ID:
                     await interaction.response.send_message(content="Here I will give you a big hug! <a:AVA_hugg:1244799800378130472>", embed=embed)
+                    return
+                if member.bot:
+                    await interaction.response.send_message(content="Bots don't need hugs! But I do, so here is a hug for you! <a:AVA_cats_hug:1244799755960451159>", embed=embed)
                     return
                 await interaction.response.send_message(content= f"{interaction.user.mention} hugs {member.mention} <:AVA_hug:1244799683042344970>", embed=embed)
         except httpx.HTTPError as http_err:
