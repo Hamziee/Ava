@@ -33,6 +33,7 @@ class Buttons(discord.ui.View):
             title="Ava | Enjoyable Commands",
             description="Here is some information about my commands :)")
         embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
+        embed.add_field(name='/hug', value='Hug your friend/lover!', inline=False)
         embed.add_field(name='/cats', value='Get your daily dose of cat pictures!', inline=False)
         embed.add_field(name='/xiaojie', value='Get your daily dose of xiaojie cat pictures!', inline=False)
         embed.add_field(name='/dogs', value='Get your daily dose of dog pictures!', inline=False)
