@@ -35,6 +35,7 @@ class Buttons(discord.ui.View):
         embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
         embed.add_field(name='/hug', value='Hug your friend/lover!', inline=False)
         embed.add_field(name='/kiss', value='Kiss your friend/lover!', inline=False)
+        embed.add_field(name='/headpats', value='Give headpats to your friend/lover!', inline=False)
         embed.add_field(name='/cats', value='Get your daily dose of cat pictures!', inline=False)
         embed.add_field(name='/xiaojie', value='Get your daily dose of xiaojie cat pictures!', inline=False)
         embed.add_field(name='/dogs', value='Get your daily dose of dog pictures!', inline=False)
