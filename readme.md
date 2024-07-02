@@ -36,6 +36,9 @@ Ava is a versatile, open-source Discord bot designed to effortlessly meet all yo
 ## Contributing
 We welcome contributions to enhance Ava's functionality. Feel free to fork the repository, make your changes, and submit a pull request.
 
+## Credits
+- **Hamzie API** for delivering most images Ava uses.
+
 ## License
 Ava is licensed under the [BSD 3-Clause](https://github.com/Hamziee/Ava/blob/main/LICENSE), allowing for free use and modification; but requires our copyright to be included and our names not be used.
 
