@@ -1,3 +1,5 @@
+# Thanks to Hamzie API for their unlimited free use of their API.
+
 import discord
 from discord.ext import commands
 from discord import app_commands
