@@ -25,7 +25,7 @@ class ping(commands.Cog):
             try:
                 startapi = time.time()
                 async with httpx.AsyncClient() as client:
-                    response = await client.get("https://api.hamzie.sitea/v1/gifs/hug")
+                    response = await client.get("https://api.hamzie.site/v1/gifs/hug")
                     response.raise_for_status()
                 endapi = time.time()
                 durationapi = round((endapi - startapi) * 100)
