@@ -20,16 +20,21 @@ class ping(commands.Cog):
             embed.set_footer(text=f"Ava | version: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await interaction.response.send_message(embed=embed)
             end = time.time()
-            startapi = time.time()
-            async with httpx.AsyncClient() as client:
-                response = await client.get("https://api.hamzie.site/v1/gifs/hug")
-                response.raise_for_status()
-            endapi = time.time()
             duration = round((end - start) * 100)
-            durationapi = round((endapi - startapi) * 100)
+            durationtext = f"{duration}ms"
+            try:
+                startapi = time.time()
+                async with httpx.AsyncClient() as client:
+                    response = await client.get("https://api.hamzie.sitea/v1/gifs/hug")
+                    response.raise_for_status()
+                endapi = time.time()
+                durationapi = round((endapi - startapi) * 100)
+                durationapitext = f"{durationapi}ms"
+            except:
+                durationapitext = "No Response"
             embed = discord.Embed(
                 title="Pong!", 
-                description=f"Discord API & Ava Latency: {duration}ms.\nHamzie API Latency: {durationapi}ms. \n\n**What does this mean?**\nLatency is calculated to measure the responsiveness and performance of the bot and the Discord server. It helps users assess the speed at which the bot can send and receive messages, providing valuable feedback on its operational efficiency. \n\nThis information is crucial for bot developers and users to ensure that the bot is functioning optimally and to identify any potential issues that may affect its performance.", 
+                description=f"Discord API & Ava Latency: {durationtext}\nHamzie API Latency: {durationapitext} \n\n**What does this mean?**\nLatency is calculated to measure the responsiveness and performance of the bot and the Discord server. It helps users assess the speed at which the bot can send and receive messages, providing valuable feedback on its operational efficiency. \n\nThis information is crucial for bot developers and users to ensure that the bot is functioning optimally and to identify any potential issues that may affect its performance.", 
                 color=discord.Color.blurple())
             embed.set_footer(text=f"Ava | version: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await interaction.edit_original_response(embed=embed)
