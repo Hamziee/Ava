@@ -22,7 +22,7 @@ class headpats(commands.Cog):
                     color=discord.Colour.blurple()
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: hamzie.site/api", icon_url=config.FOOTER_ICON)
                 
                 if member.id == interaction.user.id:
                     await interaction.response.send_message(content="You can't give head pats to yourself! But here, let me give you some head pats! <:AVA_headpat:1245509705703362560>", embed=embed)

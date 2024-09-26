@@ -24,7 +24,7 @@ class kiss(commands.Cog):
                     color=discord.Colour.blurple()
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: hamzie.site/api", icon_url=config.FOOTER_ICON)
                 
                 if member.id == interaction.user.id:
                     await interaction.response.send_message(content="You can't kiss yourself! Here I will give you a big kiss! <a:ava_CatCuddle:1244799986600902758>", embed=embed)
