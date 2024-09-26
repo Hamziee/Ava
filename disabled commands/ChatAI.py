@@ -3,6 +3,9 @@
 # AvaAI is closed source for now. ChatAI will NOT work for you unless you make your function for this command to process! If you do not know what that means then don't bother getting this to work, I might add an example script to use OpenAI in the future.
 # This script calls for ChatReponse() to respond with a message.
 
+
+# This is in progress of begin rewritten
+
 import discord
 from discord.ext import commands
 from discord import app_commands
