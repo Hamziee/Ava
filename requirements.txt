@@ -5,3 +5,5 @@ async-timeout==4.0.3
 yt_dlp==2024.4.9
 cogwatch==3.3.1
 httpx==0.27.0
+setuptools==75.1.0
+requests==2.32.3 
