@@ -5,6 +5,8 @@ import time
 import platform
 from cogwatch import watch
 import os
+import requests
+import config
 
 try:
     import config
@@ -46,6 +48,20 @@ class Client(commands.Bot):
         print(prfx + " Slash CMDs Synced " + Fore.YELLOW + str(len(synced)) + " Commands")
         await self.change_presence(activity=discord.Game(name=config.STATUS))
         print(prfx + " Discord " + Fore.YELLOW + "Presence(s) loaded.")
+        # Version Checker
+        # Get the content from the URL
+        url = "https://cdn.hamzie.site/Ava/VRC/core.txt"
+        response = requests.get(url)
+
+        # Check if the content matches the AVA_VERSION
+        if response.status_code == 200:  # Make sure the request was successful
+            remote_version = response.text.strip()
+            if config.AVA_VERSION == remote_version:
+                print("Ava up-to-date!")
+            else:
+                print(Fore.RED + Style.BRIGHT + f"Version mismatch! Local: {config.AVA_VERSION}, Remote: {remote_version}\nDownload the latest version at: https://github.com/Hamziee/Ava" + Fore.RESET)
+        else:
+            print(f"Failed to fetch latest Ava version. Status code: {response.status_code}")
 
 client = Client()
 
