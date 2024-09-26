@@ -24,7 +24,7 @@ class Buttons(discord.ui.View):
                 
                 # Define the two descriptions
                 description_options = [
-                    ("115 **new** images of Xiaojie have been added! In total, Hamzie API stores 295 images of the cute Xiaojie cat. Have you seen every one?", "Fun Fact"),
+                    ("115 **new** images of Xiaojie have been added! In total, Hamzie API stores 295 images of the cute Xiaojie cat. Have you seen them all?", "Fun Fact"),
                     ("Currently Ava uses TheCatAPI which is not free to use, that's why Hamzie API (the source of most images Ava uses) is making their own cat's section, free to use for everyone. We ask you to send in your best cat pictures, for it to be used in Hamzie API, which will eventually replace TheCatAPI in this command.", "Important Announcement")
                 ]
 
