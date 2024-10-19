@@ -36,6 +36,9 @@ Ava is a versatile, open-source Discord bot designed to effortlessly meet all yo
 ## Contributing
 We welcome contributions to enhance Ava's functionality. Feel free to fork the repository, make your changes, and submit a pull request.
 
+## AI Commands
+Are you looking for the AI commands? Unfortunately, we are unable to provide the open-source code for this feature due to issues with the source of the code we are using. However, you are welcome to contribute by creating scripts that work with other providers like OpenAI.
+
 ## Credits
 - **Hamzie API** for delivering most images Ava uses. (Free to use for everyone)
 
