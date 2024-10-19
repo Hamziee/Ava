@@ -2,10 +2,11 @@
 
 # Closed Source Code:
 # AI funcionality is currently closed source, this is part of another project called AvaAI.
-AvaAI
-AvaAI.py
 commands/AvaAI
 commands/AvaAI.py
+commands/AvaGroupAI
+commands/AvaGroupAI.py
+ai database
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
