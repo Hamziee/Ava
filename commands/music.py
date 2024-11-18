@@ -397,12 +397,13 @@ class music(commands.Cog):
             return await ctx.send('Not playing any music right now...')
 
         voter = ctx.message.author
+
         if voter == ctx.voice_state.current.requester:
             await ctx.message.add_reaction('⏭')
             ctx.voice_state.skip()
         
-        elif voter == config.OWNER_ID:
-            await ctx.message.add_reaction('⏬')
+        elif voter.id == config.OWNER_ID:
+            await ctx.message.add_reaction('⬆️')
             await ctx.send('Master skip vote, skipping.')
             ctx.voice_state.skip()
 
