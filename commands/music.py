@@ -7,6 +7,7 @@ import functools
 import itertools
 import math
 import random
+import config
 
 import discord
 import yt_dlp as youtube_dl
@@ -398,6 +399,11 @@ class music(commands.Cog):
         voter = ctx.message.author
         if voter == ctx.voice_state.current.requester:
             await ctx.message.add_reaction('⏭')
+            ctx.voice_state.skip()
+        
+        elif voter == config.OWNER_ID:
+            await ctx.message.add_reaction('⏬')
+            await ctx.send('Master skip vote, skipping.')
             ctx.voice_state.skip()
 
         elif voter.id not in ctx.voice_state.skip_votes:
