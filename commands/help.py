@@ -40,7 +40,7 @@ class Buttons(discord.ui.View):
         embed.add_field(name='/cats', value='Get your daily dose of cat pictures!', inline=False)
         embed.add_field(name='/xiaojie', value='Get your daily dose of xiaojie cat pictures!', inline=False)
         embed.add_field(name='/dogs', value='Get your daily dose of dog pictures!', inline=False)
-        embed.add_field(name='/8ball', value='Get a simple yes or no to your question.', inline=False)
+        embed.add_field(name='/8ball', value='Get the truth of your question.', inline=False)
         embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
