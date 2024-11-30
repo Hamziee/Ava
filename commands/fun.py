@@ -8,7 +8,9 @@ class Fun(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @app_commands.command(name="ball", description="Get the truth of your question.")
+    @app_commands.command(name="8ball", description="Get the truth of your world breaking question.")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def ball(self, interaction: discord.Interaction, question: str):
         try:
             responses = [

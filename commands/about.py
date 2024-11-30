@@ -8,6 +8,8 @@ class about(commands.Cog):
         self.client = client
 
     @app_commands.command(name="about", description="Some information about me!")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def about(self, interaction: discord.Interaction):
         try:
             embed = discord.Embed(

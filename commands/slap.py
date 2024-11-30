@@ -9,9 +9,11 @@ class Slap(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @app_commands.command(name="slap", description="Slap your friend/lover!")
+    @app_commands.command(name="slap", description="Slap someone who deserves it!")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.rename(member='person')
-    async def slap(self, interaction: discord.Interaction, member: discord.Member):
+    async def slap(self, interaction: discord.Interaction, member: discord.User):
         try:
             async with httpx.AsyncClient() as client:
                 if member.id == interaction.user.id:
@@ -43,15 +45,16 @@ class Slap(commands.Cog):
                 data = response.json()
                 image_url = data["link"]
                 embed = discord.Embed(
-                    color=discord.Colour.blurple()
+                    color=discord.Colour.blurple(),
+                    description=f"{interaction.user.mention} slaps {member.mention}"
                 )
                 embed.set_image(url=image_url)
                 embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url=config.FOOTER_ICON)
-                await interaction.response.send_message(content=f"{interaction.user.mention} slaps {member.mention}", embed=embed)
+                await interaction.response.send_message(embed=embed)
         except httpx.HTTPError as http_err:
             print(f'HTTP error occurred: {http_err}')
         except Exception as err:
             print(f'An error occurred: {err}')
-
+        
 async def setup(client: commands.Bot) -> None:
     await client.add_cog(Slap(client))

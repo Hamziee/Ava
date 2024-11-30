@@ -11,6 +11,8 @@ class info(commands.Cog):
         self.client = client
 
     @app_commands.command(name="technical_information", description="Display technical information")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def info(self, interaction: discord.Interaction):
         try:
             # Version Checker

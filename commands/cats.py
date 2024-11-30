@@ -47,6 +47,8 @@ class cats(commands.Cog):
         self.client = client
 
     @app_commands.command(name="cats", description="Get your daily dose of cats :)")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def cats(self, interaction: discord.Interaction):
         if cats_enabled == False:
             print(Fore.RED + Style.BRIGHT + "[!] User tried to run cats command.\nPlease provide your thecatapi key in config.py.\nThe cats command will not work without it.\nGet your own free key at https://thecatapi.com/\n\nIf you wish to hide this error, please put cats.py in the disabled_commands folder." + Fore.RESET)
