@@ -404,7 +404,7 @@ class music(commands.Cog):
         
         elif voter.id == config.OWNER_ID:
             await ctx.message.add_reaction('⬆️')
-            await ctx.send('Master skip vote, skipping.')
+            await ctx.send('Master skip vote, skipping...')
             ctx.voice_state.skip()
 
         elif voter.id not in ctx.voice_state.skip_votes:

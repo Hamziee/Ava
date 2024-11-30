@@ -10,6 +10,8 @@ class ping(commands.Cog):
         self.client = client
 
     @app_commands.command(name="ping", description="Calculate current latency.")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def ping(self, interaction: discord.Interaction):
         try:
             start = time.time()

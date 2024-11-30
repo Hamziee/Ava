@@ -37,10 +37,11 @@ class Buttons(discord.ui.View):
         embed.add_field(name='/hug', value='Hug your friend/lover!', inline=False)
         embed.add_field(name='/kiss', value='Kiss your friend/lover!', inline=False)
         embed.add_field(name='/headpats', value='Give headpats to your friend/lover!', inline=False)
+        embed.add_field(name='/slap', value='Slap someone who deserves it!', inline=False)
         embed.add_field(name='/cats', value='Get your daily dose of cat pictures!', inline=False)
         embed.add_field(name='/xiaojie', value='Get your daily dose of xiaojie cat pictures!', inline=False)
         embed.add_field(name='/dogs', value='Get your daily dose of dog pictures!', inline=False)
-        embed.add_field(name='/8ball', value='Get the truth of your question.', inline=False)
+        embed.add_field(name='/ball', value='Get the truth of your world breaking question.', inline=False)
         embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
@@ -70,6 +71,8 @@ class help(commands.Cog):
         self.client = client
 
     @app_commands.command(name="help", description="Information about my commands.")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def help(self, interaction: discord.Interaction):
         embed = discord.Embed(
             color=discord.Colour.blurple(),

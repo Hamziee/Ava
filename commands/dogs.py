@@ -37,6 +37,8 @@ class dogs(commands.Cog):
         self.client = client
 
     @app_commands.command(name="dogs", description="Get your daily dose of dogs :)")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def dogs(self, interaction: discord.Interaction):
         try:
             async with httpx.AsyncClient() as client:
