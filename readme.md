@@ -1,4 +1,4 @@
-> ### This is a development branch is currently activly being changed. If you are looking for an stable version of Ava, please look at the [main branch](https://github.com/Hamziee/Ava)
+> ### This is a development branch and is currently activly being changed. If you are looking for an stable version of Ava, please look at the [main branch](https://github.com/Hamziee/Ava)
 
 <div align="center">
 <img src="https://github.com/Hamziee/Ava/blob/main/readme.jpg?raw=true" style="height: 390px;align: center;" alt="Ava"/>
