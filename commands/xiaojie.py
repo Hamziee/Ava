@@ -4,6 +4,8 @@ from discord import app_commands
 import httpx
 import config
 import random
+from userLocale import getLang
+import importlib
 
 class Buttons(discord.ui.View):
     def __init__(self, *, timeout=180):
@@ -15,6 +17,15 @@ class Buttons(discord.ui.View):
     # Rerun button
     @discord.ui.button(label="Run the command again!",style=discord.ButtonStyle.primary)
     async def rerun_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.xiaojie.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.xiaojie.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("https://api.hamzie.site/v1/images/xiaojie")
@@ -23,10 +34,7 @@ class Buttons(discord.ui.View):
                 image_url = data["link"]
                 
                 # Define the two descriptions
-                description_options = [
-                    ("115 **new** images of Xiaojie have been added! In total, Hamzie API stores 295 images of the cute Xiaojie cat. Have you seen them all?", "Fun Fact"),
-                    ("Currently Ava uses TheCatAPI which is not free to use, that's why Hamzie API (the source of most images Ava uses) is making their own cat's section, free to use for everyone. We ask you to send in your best cat pictures, for it to be used in Hamzie API, which will eventually replace TheCatAPI in this command.", "Important Announcement")
-                ]
+                description_options = lang.description_options
 
                 # Randomly choose one of the description strings
                 random_description, random_title = random.choice(description_options)
@@ -37,7 +45,7 @@ class Buttons(discord.ui.View):
                     description=random_description
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: hamzie.site/api", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.site/api", icon_url=config.FOOTER_ICON)
 
                 await interaction.response.send_message(embed=embed, view=Buttons())
         except httpx.HTTPError as http_err:
@@ -53,6 +61,15 @@ class xiaojie(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def xiaojie(self, interaction: discord.Interaction):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.xiaojie.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.xiaojie.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("https://api.hamzie.site/v1/images/xiaojie")
@@ -61,10 +78,7 @@ class xiaojie(commands.Cog):
                 image_url = data["link"]
                 
                 # Define the two descriptions
-                description_options = [
-                    ("115 **new** images of Xiaojie have been added! In total, Hamzie API stores 295 images of the cute Xiaojie cat. Have you seen every one?", "Fun Fact:"),
-                    ("Currently Ava uses TheCatAPI for the /cats command, which is not free to use. That's why Hamzie API (the source of most images Ava uses) is making their own cat's section, free to use for everyone. We ask you to send in your best cat pictures, for it to be used in Hamzie API, which will eventually replace TheCatAPI in this command.", "Important Announcement")
-                ]
+                description_options = lang.description_options
 
                 # Randomly choose one of the description strings
                 random_description, random_title = random.choice(description_options)
@@ -75,7 +89,7 @@ class xiaojie(commands.Cog):
                     description=random_description
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: hamzie.site/api", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.site/api", icon_url=config.FOOTER_ICON)
 
                 await interaction.response.send_message(embed=embed, view=Buttons())
         except httpx.HTTPError as http_err:

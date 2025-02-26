@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+from userLocale import getLang
+import importlib
 
 class embed(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -38,6 +40,15 @@ class embed(commands.Cog):
         discord.app_commands.Choice(name='Yellow', value=24)
     ])
     async def embed(self, interaction: discord.Interaction, title: str, description: str, color: discord.app_commands.Choice[int]):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.embed.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.embed.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         color_mapping = {
         'Aqua': (26, 188, 156),
         'Dark Aqua': (17, 128, 106),
@@ -77,10 +88,10 @@ class embed(commands.Cog):
                 color=embed_color,
                 title=title,
                 description=description)
-            await interaction.response.send_message(content='Embed created, deleting in 5 seconds...', ephemeral=True, delete_after=5)
+            await interaction.response.send_message(content=lang.embedCreated, ephemeral=True, delete_after=5)
             await interaction.channel.send(embed=embed)
         else:
-            await interaction.response.send_message(content='You need the `Manage Server` permission to make embeds.', ephemeral=True)
+            await interaction.response.send_message(content=lang.embedNeedPerms, ephemeral=True)
             
 
 async def setup(client:commands.Bot) -> None:

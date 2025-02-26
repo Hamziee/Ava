@@ -2,8 +2,9 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import httpx
-from datetime import datetime
 import config
+from userLocale import getLang
+import importlib
 
 class Slap(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -14,6 +15,15 @@ class Slap(commands.Cog):
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.rename(member='person')
     async def slap(self, interaction: discord.Interaction, member: discord.User):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.slap.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.slap.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             async with httpx.AsyncClient() as client:
                 if member.id == interaction.user.id:
@@ -25,8 +35,8 @@ class Slap(commands.Cog):
                         color=discord.Colour.blurple()
                     )
                     embed.set_image(url=image_url)
-                    embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url=config.FOOTER_ICON)
-                    await interaction.response.send_message(content="You don't need to slap yourself! How about a hug instead?", embed=embed)
+                    embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
+                    await interaction.response.send_message(content=lang.slap_toself, embed=embed)
                     return
                 if member.id == config.BOT_ID:
                     response = await client.get("https://api.hamzie.site/v1/gifs/hug")
@@ -37,8 +47,8 @@ class Slap(commands.Cog):
                         color=discord.Colour.blurple()
                     )
                     embed.set_image(url=image_url)
-                    embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url=config.FOOTER_ICON)
-                    await interaction.response.send_message(content="Hey, you can't slap me! But it's okay, here's a hug for you.", embed=embed)
+                    embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
+                    await interaction.response.send_message(content=lang.slap_toava, embed=embed)
                     return
                 response = await client.get("https://api.hamzie.site/v1/gifs/slap")
                 response.raise_for_status()
@@ -46,10 +56,10 @@ class Slap(commands.Cog):
                 image_url = data["link"]
                 embed = discord.Embed(
                     color=discord.Colour.blurple(),
-                    description=f"{interaction.user.mention} slaps {member.mention}"
+                    description=f"{interaction.user.mention} {lang.gives_slap} {member.mention}"
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: api.hamzie.site", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
                 await interaction.response.send_message(embed=embed)
         except httpx.HTTPError as http_err:
             print(f'HTTP error occurred: {http_err}')

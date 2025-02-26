@@ -42,6 +42,7 @@ class Client(commands.Bot):
         prfx = (Back.BLACK + Fore.GREEN + time.strftime("%H:%M:%S UTC", time.gmtime()) + Back.RESET + Fore.WHITE + Style.BRIGHT)
         print(prfx + " Logged in as " + Fore.YELLOW + self.user.name)
         print(prfx + " Bot ID " + Fore.YELLOW + str(self.user.id))
+        print(prfx + " Ava version " + Fore.YELLOW + str(config.AVA_VERSION))
         print(prfx + " Discord Version " + Fore.YELLOW + discord.__version__)
         print(prfx + " Python Version " + Fore.YELLOW + str(platform.python_version()))
         synced = await self.tree.sync()

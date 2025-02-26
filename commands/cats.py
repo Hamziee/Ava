@@ -5,6 +5,8 @@ from colorama import Back, Fore, Style
 import httpx
 from datetime import datetime
 import config
+from userLocale import getLang
+import importlib
 global cats_enabled
 if config.THECATAPI_KEY == 'your thecatapi key here':
     print(Fore.RED + Style.BRIGHT + "Please provide your thecatapi key in config.py.\nThe cats command will not work without it.\nGet your own free key at https://thecatapi.com/\n\nIf you wish to hide this error, please put cats.py in the disabled_commands folder." + Fore.RESET)
@@ -21,6 +23,15 @@ class Buttons(discord.ui.View):
 
     @discord.ui.button(label="Run the command again!", style=discord.ButtonStyle.primary)
     async def rerun_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.cats.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.cats.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("https://api.thecatapi.com/v1/images/search", headers={"x-api-key": config.THECATAPI_KEY})
@@ -29,8 +40,8 @@ class Buttons(discord.ui.View):
 
             embed = discord.Embed(
                 color=discord.Colour.blurple(),
-                title="Important Message:",
-                description="Currently Ava uses TheCatAPI which is not free to use, that's why Hamzie API (the source of most images Ava uses) is making their own cat's section, free to use for everyone. We ask you to send in your best cat pictures, for it to be used in Hamzie API, which will eventually replace TheCatAPI in this command."
+                title=lang.title,
+                description=lang.description
             )
             embed.set_image(url=image_url)
             embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: thecatapi.com", icon_url=config.FOOTER_ICON)
@@ -54,6 +65,15 @@ class cats(commands.Cog):
             print(Fore.RED + Style.BRIGHT + "[!] User tried to run cats command.\nPlease provide your thecatapi key in config.py.\nThe cats command will not work without it.\nGet your own free key at https://thecatapi.com/\n\nIf you wish to hide this error, please put cats.py in the disabled_commands folder." + Fore.RESET)
             await interaction.response.send_message(content='The cats command is disabled due to missing thecatapi key. Please contact the bot owner.\n\nNote for bot owner: If you wish to hide this error, please put cats.py in the disabled_commands folder.')
             return
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.cats.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.cats.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("https://api.thecatapi.com/v1/images/search", headers={"x-api-key": config.THECATAPI_KEY})
@@ -62,8 +82,8 @@ class cats(commands.Cog):
 
             embed = discord.Embed(
                 color=discord.Colour.blurple(),
-                title="Important Message:",
-                description="Currently the bot uses TheCatAPI which is not free to use, that's why Hamzie API (the source of most images Ava uses) is making their own cat's section, free to use for everyone. We ask you to send in your best cat pictures, for it to be used in Hamzie API, which will eventually replace TheCatAPI in this command."
+                title=lang.title,
+                description=lang.description
             )
             embed.set_image(url=image_url)
             embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: thecatapi.com", icon_url=config.FOOTER_ICON)
