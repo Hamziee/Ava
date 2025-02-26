@@ -36,11 +36,10 @@ Ava is a versatile, open-source Discord bot designed to effortlessly meet all yo
 ## Contributing
 We welcome contributions to enhance Ava's functionality. Feel free to fork the repository, make your changes, and submit a pull request.
 
-## AI Commands
-Are you looking for the AI commands? Unfortunately, we are unable to provide the open-source code for this feature due to issues with the source of the code we are using. However, you are welcome to contribute by creating scripts that work with other providers like OpenAI.
-
 ## Credits
 - **Hamzie API** for delivering most images Ava uses. (Free to use for everyone)
+- **thecatapi** for cat pictures.
+- **dog.ceo/dog-api/** for dog pictures.
 
 ## License
 Ava is licensed under the [BSD 3-Clause](https://github.com/Hamziee/Ava/blob/main/LICENSE), allowing for free use and modification; but requires our copyright to be included and our names not be used.

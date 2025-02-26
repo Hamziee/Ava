@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import config
+from userLocale import getLang
+import importlib
 
 class about(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -11,11 +13,21 @@ class about(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def about(self, interaction: discord.Interaction):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.about.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.cats.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
+        
         try:
             embed = discord.Embed(
                 color=discord.Colour.blurple(),
-                title="Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
-                description="Ava is a versatile, open-source Discord bot designed to effortlessly meet all your entertainment needs. With Ava, entertaining your server members becomes a breeze. From music to fun utilities, Ava has everything covered. Embrace simplicity and functionality with Ava, the reliable companion for any Discord community.\n### [Request Feature](https://github.com/Hamziee/Ava/issues/new) **|** [Github](https://github.com/Hamziee/Ava>) **|** [Maintainer](<https://github.com/Hamziee/>) \n[Hosted by HEO Systems](<https://heo-systems.net>)\n\n**Developer Note:** Ava is currently a work in progress, and I am working on adding new and exciting features to Ava. Please bear in mind that this is a project of mine that I work on in my free time, so don't expect fast progress. - Hamza")
+                title=lang.title,
+                description=lang.description)
             embed.set_footer(text=f"Ava | version: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await interaction.response.send_message(embed=embed)
         except Exception as e:

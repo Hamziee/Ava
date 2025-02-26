@@ -5,6 +5,8 @@ import aiohttp
 import random
 import asyncio
 import config
+from userLocale import getLang
+import importlib
 
 class Games(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -67,6 +69,15 @@ class Games(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def typerace(self, interaction: discord.Interaction):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.games.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.games.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get("https://fakerapi.it/api/v1/texts?_quantity=1&_characters=150") as response:
@@ -81,7 +92,7 @@ class Games(commands.Cog):
             embed = discord.Embed(
                 color=discord.Colour.blurple(),
                 title="⌨️ Type Race",
-                description=f"Type the following sentence as fast as you can:\n\n**{sentence}**"
+                description=f"{lang.typeracer_description}\n\n**{sentence}**"
             )
             embed.set_footer(text=config.FOOTER_TXT + " - Start typing now!")
             await interaction.response.send_message(embed=embed)
@@ -96,15 +107,42 @@ class Games(commands.Cog):
 
                 if user_response.content == sentence:
                     time_taken = end_time - start_time
-                    await interaction.followup.send(content=f"🎉 Well done! You typed the sentence in **{time_taken:.2f} seconds**.")
+                    await interaction.followup.send(content=f"{lang.typeracer_correct} {time_taken:.2f} {lang.typeracer_correct2}")
                 else:
-                    await interaction.followup.send(content="❌ Incorrect! Try again next time.")
+                    await interaction.followup.send(content=lang.typeracer_incorrect)
             except asyncio.TimeoutError:
-                await interaction.followup.send(content="⏰ Time's up! Better luck next time.")
+                await interaction.followup.send(content=lang.typeracer_timesup)
 
         except Exception as e:
             print(e)
             await interaction.response.send_message(content="An error occurred while running the type race.")
+    
+    @app_commands.command(name="8ball", description="Get the truth of your world breaking question.")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    async def ball(self, interaction: discord.Interaction, question: str):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.games.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.games.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
+        try:
+            responses = lang.ball_responses
+            answer = random.choice(responses)
+            embed = discord.Embed(
+                color=discord.Colour.blurple(),
+                title=f"{lang.ball_title} {question}",
+                description=f"{lang.ball_description} {answer}"
+            )
+            embed.set_footer(text=f"Ava | version: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
+            await interaction.response.send_message(embed=embed)
+        except Exception as e:
+            print(e)
+            await interaction.followup.send(content=lang.error)
 
 
 async def setup(client: commands.Bot) -> None:

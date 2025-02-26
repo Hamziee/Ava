@@ -4,6 +4,8 @@ from discord import app_commands
 import httpx
 from datetime import datetime
 import config
+from userLocale import getLang
+import importlib
 
 class Buttons(discord.ui.View):
     def __init__(self, *, timeout=180):
@@ -14,6 +16,15 @@ class Buttons(discord.ui.View):
 
     @discord.ui.button(label="Run the command again!", style=discord.ButtonStyle.primary)
     async def rerun_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.dogs.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.dogs.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("https://dog.ceo/api/breeds/image/random")
@@ -21,7 +32,8 @@ class Buttons(discord.ui.View):
                 data = response.json()
                 image_url = data["message"]
                 embed = discord.Embed(
-                    color=discord.Colour.blurple()
+                    color=discord.Colour.blurple(),
+                    title=lang.title
                 )
                 embed.set_image(url=image_url)
                 embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: dog.ceo/dog-api/", icon_url=config.FOOTER_ICON)
@@ -40,6 +52,15 @@ class dogs(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def dogs(self, interaction: discord.Interaction):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.dogs.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.dogs.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.get("https://dog.ceo/api/breeds/image/random")
@@ -47,7 +68,8 @@ class dogs(commands.Cog):
                 data = response.json()
                 image_url = data["message"]
                 embed = discord.Embed(
-                    color=discord.Colour.blurple()
+                    color=discord.Colour.blurple(),
+                    title=lang.title
                 )
                 embed.set_image(url=image_url)
                 embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: dog.ceo/dog-api/", icon_url=config.FOOTER_ICON)
