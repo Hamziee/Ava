@@ -6,9 +6,9 @@
 # If you have any suggestions or improvements, please open a pull request!
 # Dank je wel!
 
-gives_hug = "geeft een knuffel"
+gives_hug = "geeft een knuffel aan"
 hug_toself = "Je kunt jezelf niet knuffelen! Hier, ik geef je een dikke knuffel!"
 hug_toava = "Hier, ik geef je een dikke knuffel!"
 hug_toabot = "Bots hebben geen knuffels nodig! Maar ik wel, dus hier is een knuffel voor jou!"
-version = "versie:"
-by = "Afbeelding door:"
+version = "versie"
+by = "Afbeelding door"

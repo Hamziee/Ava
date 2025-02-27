@@ -34,16 +34,16 @@ class headpats(commands.Cog):
                 desctxt = f"{interaction.user.mention} {lang.gives_headpats} {member.mention}"
                 if member.id == interaction.user.id:
                         desctxt = f"{lang.headpats_toself} <:AVA_headpat:1245509705703362560>"
-                if member.id == config.BOT_ID:
+                elif member.id == config.BOT_ID:
                         desctxt = f"{lang.headpats_toava} <:AVA_headpat:1245509705703362560>"
-                if member.bot:
+                elif member.bot:
                         desctxt = f"{lang.headpats_toabot} <:AVA_headpat:1245509705703362560>"
                 embed = discord.Embed(
                     color=discord.Colour.blurple(),
                     description=desctxt
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | {lang.version} {config.AVA_VERSION} - {lang.by} hamzie.site/api", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.site/api", icon_url=config.FOOTER_ICON)
                 await interaction.response.send_message(embed=embed)
         except httpx.HTTPError as http_err:
             print(f'HTTP error occurred: {http_err}')

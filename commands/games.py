@@ -138,7 +138,7 @@ class Games(commands.Cog):
                 title=f"{lang.ball_title} {question}",
                 description=f"{lang.ball_description} {answer}"
             )
-            embed.set_footer(text=f"Ava | version: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
+            embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await interaction.response.send_message(embed=embed)
         except Exception as e:
             print(e)

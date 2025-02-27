@@ -38,7 +38,7 @@ class Slap(commands.Cog):
                     embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
                     await interaction.response.send_message(content=lang.slap_toself, embed=embed)
                     return
-                if member.id == config.BOT_ID:
+                elif member.id == config.BOT_ID:
                     response = await client.get("https://api.hamzie.site/v1/gifs/hug")
                     response.raise_for_status()
                     data = response.json()
