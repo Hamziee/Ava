@@ -6,8 +6,9 @@
 # If you have any suggestions or improvements, please open a pull request!
 # Mulțumesc!
 
-gives_slap = "ștampă pe"
-slap_toself = "Nu trebuie să te ștampăi singur! Ce zici de o îmbrățișare în schimb?"
-slap_toava = "Hei, nu poți să mă ștampăi! Dar nu-i nimic, iată o îmbrățișare pentru tine."
+gives_hug = "îl îmbrățișează pe"
+hug_toself = "Nu te poți îmbrățișa singur! Uite, îți ofer eu o îmbrățișare mare!"
+hug_toava = "Uite, îți ofer eu o îmbrățișare mare!"
+hug_toabot = "Boții nu au nevoie de îmbrățișări! Dar eu da, așa că iată o îmbrățișare pentru tine!"
 version = "versiune"
 by = "Imagine de"

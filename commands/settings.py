@@ -12,6 +12,8 @@ class SettingsCog(commands.Cog):
     settings = app_commands.Group(name="settings", description="Manage your settings.")
 
     @settings.command(name="language", description="Set your preferred language.")
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.choices(locale=[
         app_commands.Choice(name="English (US)", value="en_US"),
         app_commands.Choice(name="Dutch (NL)", value="nl_NL"),

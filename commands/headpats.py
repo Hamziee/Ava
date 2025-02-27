@@ -43,7 +43,7 @@ class headpats(commands.Cog):
                     description=desctxt
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | {lang.version} {config.AVA_VERSION} - {lang.by} hamzie.site/api", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.site/api", icon_url=config.FOOTER_ICON)
                 await interaction.response.send_message(embed=embed)
         except httpx.HTTPError as http_err:
             print(f'HTTP error occurred: {http_err}')

@@ -6,8 +6,6 @@
 # If you have any suggestions or improvements, please open a pull request!
 # Mulțumesc!
 
-gives_slap = "ștampă pe"
-slap_toself = "Nu trebuie să te ștampăi singur! Ce zici de o îmbrățișare în schimb?"
-slap_toava = "Hei, nu poți să mă ștampăi! Dar nu-i nimic, iată o îmbrățișare pentru tine."
-version = "versiune"
-by = "Imagine de"
+lang_set = "✅ Limba ta preferată a fost setată la"
+lang_set2 = "!" # This part is also translatable because some languages have different sentence building and might require a different order of words, this is to give them room to do that.
+lang_warn = "⚠️ Există șansa ca o comandă să nu fie (complet) tradusă. Dacă întâmpini acest lucru, te rugăm să-l raportezi dezvoltatorilor. Sau chiar mai bine, ajută-ne să o traducem!"

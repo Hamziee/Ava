@@ -7,7 +7,6 @@ from cogwatch import watch
 import os
 import requests
 import config
-
 try:
     import config
 except:

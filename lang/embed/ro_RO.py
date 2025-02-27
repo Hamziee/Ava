@@ -6,8 +6,5 @@
 # If you have any suggestions or improvements, please open a pull request!
 # Mulțumesc!
 
-gives_slap = "ștampă pe"
-slap_toself = "Nu trebuie să te ștampăi singur! Ce zici de o îmbrățișare în schimb?"
-slap_toava = "Hei, nu poți să mă ștampăi! Dar nu-i nimic, iată o îmbrățișare pentru tine."
-version = "versiune"
-by = "Imagine de"
+embedCreated = "Embed creat, se șterge în 5 secunde..."
+embedNeedPerms = "Ai nevoie de permisiunea `Administrare server` pentru a crea embed-uri."
