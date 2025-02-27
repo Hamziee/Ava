@@ -6,7 +6,8 @@
 # If you have any suggestions or improvements, please open a pull request!
 # Mulțumesc!
 
-title = "Mesaj Important:"
-description = "În prezent, botul folosește TheCatAPI, care nu este gratuit. De aceea, Hamzie API (sursa majorității imaginilor folosite de Ava) creează propria secțiune pentru pisici, disponibilă gratuit pentru toată lumea. Vă rugăm să trimiteți cele mai bune poze cu pisici, pentru a fi utilizate în Hamzie API, care în cele din urmă va înlocui TheCatAPI în această comandă."
+gives_slap = "a plesnit"
+slap_toself = "You don't need to slap yourself! How about a hug instead?"
+slap_toava = "Hey, you can't slap me! But it's okay, here's a hug for you."
 version = "version"
-by = "Image by"
+by = "Image by" 

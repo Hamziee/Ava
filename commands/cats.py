@@ -44,7 +44,7 @@ class Buttons(discord.ui.View):
                 description=lang.description
             )
             embed.set_image(url=image_url)
-            embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: thecatapi.com", icon_url=config.FOOTER_ICON)
+            embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: thecatapi.com", icon_url=config.FOOTER_ICON)
 
             await interaction.response.send_message(embed=embed, view=Buttons())
         except httpx.HTTPError as http_err:
@@ -86,7 +86,7 @@ class cats(commands.Cog):
                 description=lang.description
             )
             embed.set_image(url=image_url)
-            embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: thecatapi.com", icon_url=config.FOOTER_ICON)
+            embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: thecatapi.com", icon_url=config.FOOTER_ICON)
 
             await interaction.response.send_message(embed=embed, view=Buttons())
         except Exception as e:

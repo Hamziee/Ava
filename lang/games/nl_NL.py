@@ -1,5 +1,5 @@
 # Translation for Dutch (Netherlands) language - Nederlandse taal (Nederland)
-# File version: v1.0
+# File version: v2.0
 # Translation by: @Hamziee
 # A language needs translation if this version doesn't match the version in the source file. The source file of any translation is always en_US.py.
 # Please make sure to check the bot's functionality after translating.
@@ -31,4 +31,6 @@ ball_responses = [
     "Mijn bronnen zeggen van niet."
 ]
 
+
+version = "versie"
 error = "Er is een fout opgetreden."

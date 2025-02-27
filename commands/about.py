@@ -28,7 +28,7 @@ class about(commands.Cog):
                 color=discord.Colour.blurple(),
                 title=lang.title,
                 description=lang.description)
-            embed.set_footer(text=f"Ava | version: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
+            embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await interaction.response.send_message(embed=embed)
         except Exception as e:
             print(e)

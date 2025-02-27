@@ -6,8 +6,8 @@
 # If you have any suggestions or improvements, please open a pull request!
 # Dank je wel!
 
-gives_slap = "geeft een klap"
-slap_toself = "Je hoeft jezelf geen klap te geven! Wat dacht je van een knuffel in plaats daarvan?"
+gives_slap = "geeft een klap aan"
+slap_toself = "Je hoeft jezelf geen klap te geven! Wat dacht je van een dikke knuffel?"
 slap_toava = "Hé, je kunt mij niet slaan! Maar het is oké, hier is een knuffel voor jou."
 version = "versie"
 by = "Afbeelding door"

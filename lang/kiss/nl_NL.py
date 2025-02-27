@@ -6,9 +6,9 @@
 # If you have any suggestions or improvements, please open a pull request!
 # Dank je wel!
 
-gives_kiss = "geeft een kus"
+gives_kiss = "geeft een kus aan"
 kiss_toself = "Je kunt jezelf geen kus geven! Hier, ik geef je een dikke kus!"
 kiss_toava = "Hier, ik geef je een dikke kus!"
 kiss_toabot = "Bots hebben geen kussen nodig! Maar ik wel, dus hier is een kus voor jou!"
-version = "versie:"
-by = "Afbeelding door:"
+version = "versie"
+by = "Afbeelding door"

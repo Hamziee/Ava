@@ -36,7 +36,7 @@ class Buttons(discord.ui.View):
                     title=lang.title
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: dog.ceo/dog-api/", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: dog.ceo/dog-api/", icon_url=config.FOOTER_ICON)
 
             await interaction.response.send_message(embed=embed, view=Buttons())
         except httpx.HTTPError as http_err:
@@ -72,7 +72,7 @@ class dogs(commands.Cog):
                     title=lang.title
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | version: {config.AVA_VERSION} - Image by: dog.ceo/dog-api/", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: dog.ceo/dog-api/", icon_url=config.FOOTER_ICON)
 
                 await interaction.response.send_message(embed=embed, view=Buttons())
         except httpx.HTTPError as http_err:
