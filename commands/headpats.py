@@ -34,9 +34,9 @@ class headpats(commands.Cog):
                 desctxt = f"{interaction.user.mention} {lang.gives_headpats} {member.mention}"
                 if member.id == interaction.user.id:
                         desctxt = f"{lang.headpats_toself} <:AVA_headpat:1245509705703362560>"
-                if member.id == config.BOT_ID:
+                elif member.id == config.BOT_ID:
                         desctxt = f"{lang.headpats_toava} <:AVA_headpat:1245509705703362560>"
-                if member.bot:
+                elif member.bot:
                         desctxt = f"{lang.headpats_toabot} <:AVA_headpat:1245509705703362560>"
                 embed = discord.Embed(
                     color=discord.Colour.blurple(),

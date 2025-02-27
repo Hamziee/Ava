@@ -36,9 +36,9 @@ class kiss(commands.Cog):
                 desctxt = f"{interaction.user.mention} {lang.gives_kiss} {member.mention} <:AVA_hug:1244799683042344970>"
                 if member.id == interaction.user.id:
                     desctxt=f"{lang.kiss_toself} <a:ava_CatCuddle:1244799986600902758>"
-                if member.id == config.BOT_ID:
+                elif member.id == config.BOT_ID:
                     desctxt=f"{lang.kiss_toava} <a:AVA_hugg:1244799800378130472>"
-                if member.bot:
+                elif member.bot:
                     desctxt=f"{lang.kiss_toabot} <a:AVA_cats_hug:1244799755960451159>"
                 embed = discord.Embed(
                     color=discord.Colour.blurple(),
