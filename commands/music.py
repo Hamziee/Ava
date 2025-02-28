@@ -231,6 +231,8 @@ class MusicCog(commands.Cog):
             return None
 
     @app_commands.command(name="play", description="Play a song or add to the queue.")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     async def play(self, interaction: discord.Interaction, query: str):
         # Get language for this user
         lang = get_lang_module(interaction.user.id)
@@ -313,6 +315,8 @@ class MusicCog(commands.Cog):
             await interaction.followup.send(embed=embed)
 
     @app_commands.command(name="skip", description="Skip the current song.")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     async def skip(self, interaction: discord.Interaction):
         # Get language for this user
         lang = get_lang_module(interaction.user.id)
@@ -327,6 +331,8 @@ class MusicCog(commands.Cog):
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @app_commands.command(name="queue", description="View the current song queue.")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     async def queue(self, interaction: discord.Interaction, page: int = 1):
         # Get language for this user
         lang = get_lang_module(interaction.user.id)
@@ -364,6 +370,8 @@ class MusicCog(commands.Cog):
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="leave", description="Leave the voice channel and clear the queue.")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     async def leave(self, interaction: discord.Interaction):
         # Get language for this user
         lang = get_lang_module(interaction.user.id)
