@@ -142,7 +142,8 @@ class MusicCog(commands.Cog):
             embed = self.create_embed(
                 lang.error,
                 lang.must_be_in_voice,
-                discord.Color.red()
+                discord.Color.red(),
+                lang
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return None
@@ -154,7 +155,8 @@ class MusicCog(commands.Cog):
             embed = self.create_embed(
                 lang.error,
                 lang.already_in_another_voice,
-                discord.Color.red()
+                discord.Color.red(),
+                lang
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return None
@@ -183,24 +185,28 @@ class MusicCog(commands.Cog):
                     requester=state.current['requester'],
                     duration=state.current['duration']
                 ),
-                discord.Color.green()
+                discord.Color.green(),
+                lang
             )
             await interaction.response.send_message(embed=embed)
         else:
             embed = self.create_embed(
                 lang.now_playing,
                 lang.no_music_playing,
-                discord.Color.orange()
+                discord.Color.orange(),
+                lang
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @staticmethod
-    def create_embed(title, description, color=discord.Color.blue()):
-        """Create an embed with a footer."""
+    def create_embed(title, description, color=discord.Color.blue(), lang=None):
+        """Create an embed with a footer using the provided language module."""
         embed = discord.Embed(title=title, description=description, color=color)
         
-        # Using the default language for footer
-        import lang.music.en_US as lang
+        # Use the provided language module or default to en_US
+        if not lang:
+            import lang.music.en_US as lang
+            
         embed.set_footer(
             text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.footer_extra}",
             icon_url=config.FOOTER_ICON
@@ -247,7 +253,9 @@ class MusicCog(commands.Cog):
 
         embed = self.create_embed(
             lang.searching, 
-            lang.searching_for.format(query=query)
+            lang.searching_for.format(query=query),
+            discord.Color.blue(),
+            lang
         )
         await interaction.response.send_message(embed=embed)
 
@@ -256,7 +264,8 @@ class MusicCog(commands.Cog):
             embed = self.create_embed(
                 lang.error,
                 lang.no_results,
-                discord.Color.red()
+                discord.Color.red(),
+                lang
             )
             await interaction.followup.send(embed=embed)
             return
@@ -272,7 +281,8 @@ class MusicCog(commands.Cog):
                 embed = self.create_embed(
                     lang.error,
                     lang.invalid_song_data,
-                    discord.Color.red()
+                    discord.Color.red(),
+                    lang
                 )
                 await interaction.followup.send(embed=embed)
                 return
@@ -288,6 +298,7 @@ class MusicCog(commands.Cog):
                     "duration": entry.get("duration", "Unknown"),
                     "author": entry.get("uploader", "Unknown"),
                     "requester": interaction.user.display_name,
+                    "requester_id": interaction.user.id  # Store requester's ID for language lookup
                 }
                 await state.queue.put(song)
 
@@ -299,7 +310,9 @@ class MusicCog(commands.Cog):
                         author=song['author'],
                         requester=song['requester'],
                         duration=song['duration']
-                    )
+                    ),
+                    discord.Color.blue(),
+                    lang
                 )
                 await interaction.followup.send(embed=embed)
 
@@ -310,7 +323,8 @@ class MusicCog(commands.Cog):
             embed = self.create_embed(
                 lang.error,
                 lang.processing_error.format(error=str(e)),
-                discord.Color.red()
+                discord.Color.red(),
+                lang
             )
             await interaction.followup.send(embed=embed)
 
@@ -324,10 +338,10 @@ class MusicCog(commands.Cog):
         state = self.get_voice_state(interaction.guild.id)
         if state.voice and state.voice.is_playing():
             state.voice.stop()
-            embed = self.create_embed(lang.skipped, lang.skipped_success)
+            embed = self.create_embed(lang.skipped, lang.skipped_success, discord.Color.blue(), lang)
             await interaction.response.send_message(embed=embed)
         else:
-            embed = self.create_embed(lang.error, lang.no_music_playing, discord.Color.red())
+            embed = self.create_embed(lang.error, lang.no_music_playing, discord.Color.red(), lang)
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @app_commands.command(name="queue", description="View the current song queue.")
@@ -339,7 +353,7 @@ class MusicCog(commands.Cog):
         
         state = self.get_voice_state(interaction.guild.id)
         if state.queue.empty():
-            embed = self.create_embed(lang.queue_title, lang.queue_empty, discord.Color.orange())
+            embed = self.create_embed(lang.queue_title, lang.queue_empty, discord.Color.orange(), lang)
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
@@ -350,7 +364,9 @@ class MusicCog(commands.Cog):
         if page < 1 or page > max_pages:
             embed = self.create_embed(
                 lang.error, 
-                lang.invalid_page.format(max_pages=max_pages)
+                lang.invalid_page.format(max_pages=max_pages),
+                discord.Color.red(),
+                lang
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
@@ -365,7 +381,9 @@ class MusicCog(commands.Cog):
         )
         embed = self.create_embed(
             lang.queue_title, 
-            lang.queue_page.format(page=page, max_pages=max_pages, queue_str=queue_str)
+            lang.queue_page.format(page=page, max_pages=max_pages, queue_str=queue_str),
+            discord.Color.blue(),
+            lang
         )
         await interaction.response.send_message(embed=embed)
 
@@ -383,11 +401,13 @@ class MusicCog(commands.Cog):
             self.voice_states.pop(interaction.guild.id, None)
             embed = self.create_embed(
                 lang.disconnected,
-                lang.disconnect_success
+                lang.disconnect_success,
+                discord.Color.blue(),
+                lang
             )
             await interaction.response.send_message(embed=embed)
         else:
-            embed = self.create_embed(lang.error, lang.not_in_voice, discord.Color.red())
+            embed = self.create_embed(lang.error, lang.not_in_voice, discord.Color.red(), lang)
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
 async def setup(bot):
