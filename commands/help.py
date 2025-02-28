@@ -31,8 +31,6 @@ class Buttons(discord.ui.View):
             color=discord.Colour.blurple(),
             title="Ava | Enjoyable Commands",
             description="Here is some information about my commands :)")
-        embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
-        embed.add_field(name='/groupchat', value='Chat with my AI, using the context of the channel!', inline=False)
         embed.add_field(name='/hug', value='Hug your friend/lover!', inline=False)
         embed.add_field(name='/kiss', value='Kiss your friend/lover!', inline=False)
         embed.add_field(name='/headpats', value='Give headpats to your friend/lover!', inline=False)
@@ -59,6 +57,18 @@ class Buttons(discord.ui.View):
         embed.add_field(name='/skip', value='Skip the current song.', inline=False)
         embed.add_field(name='/queue [page]', value='View the current song queue. (Page is optional.)', inline=False)
         embed.add_field(name='/leave', value='Leave the voice channel and clear the queue.', inline=False)
+        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
+        await interaction.response.defer()
+        await interaction.edit_original_response(embed=embed, view=Buttons())
+    
+    # settings
+    @discord.ui.button(label="Settings",style=discord.ButtonStyle.primary)
+    async def settings_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        embed = discord.Embed(
+                color=discord.Colour.blurple(),
+                title="Music | Music Commands",
+                description="Here is some Information about my music commands :)")
+        embed.add_field(name='/settings language <language>', value='Changed the preferred language.', inline=False)
         embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
