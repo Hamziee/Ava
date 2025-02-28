@@ -5,6 +5,8 @@ import config
 import sys
 import requests
 from importlib.metadata import distributions
+from userLocale import getLang
+import importlib
 
 class info(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -14,14 +16,23 @@ class info(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def info(self, interaction: discord.Interaction):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.info.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.info.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         try:
             # Version Checker
             url = "https://cdn.hamzie.site/Ava/VRC/core.txt"
             response = requests.get(url)
-            remote_version = response.text.strip() if response.status_code == 200 else "Failed to fetch."
+            remote_version = response.text.strip() if response.status_code == 200 else lang.failedFetch
 
             # TheCatAPI Check
-            cats_string = 'Enabled' if config.THECATAPI_KEY != 'your thecatapi key here' else 'Disabled'
+            cats_string = lang.enabled if config.THECATAPI_KEY != 'your thecatapi key here' else lang.disabled
 
             # Python Version
             python_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
@@ -36,22 +47,16 @@ class info(commands.Cog):
 
             embed = discord.Embed(
                 color=discord.Colour.blurple(),
-                title="Technical Details",
-                description="If you are looking for information about the bot, run the command: '/about'")
-            embed.add_field(name='Core', value=f'Running Ava {config.AVA_VERSION} | (Latest: {remote_version})\nAva Config Version: {config.CONFIG_VERSION}\nPython {python_version}', inline=False)
-            embed.add_field(name="Python Packages", value=package_string, inline=False)
-            AvaAIver = "Disabled"
-            try:
-                import commands.AvaAI as AvaAI
-                AvaAIver = AvaAI.AvaAIver
-            except:
-                pass
-            embed.add_field(name="Ava Optional Modules", value=f'AvaAI: {AvaAIver} - In Development | (Being Rewritten)\nTheCatAPI: {cats_string} | (Will be removed in the future in favor of a new system that will be provided by Hamzie API)', inline=False)
-            embed.set_footer(text=f"Ava | version: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
+                title=lang.title,
+                description=lang.description)
+            embed.add_field(name=lang.core, value=f'{lang.running} Ava {config.AVA_VERSION} | ({lang.latest}: {remote_version})\nAva {lang.cnf_version}: {config.CONFIG_VERSION}\nPython {python_version}', inline=False)
+            embed.add_field(name=lang.py_packages, value=package_string, inline=False)
+            embed.add_field(name=f"Ava {lang.optional_mods}", value=f'TheCatAPI: {cats_string} | ({lang.new_system})', inline=False)
+            embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await interaction.response.send_message(embed=embed)
         except Exception as e:
             print(e)
-            await interaction.followup.send(content='Error occurred.')
+            await interaction.followup.send(content=lang.error)
 
 async def setup(client:commands.Bot) -> None:
     await client.add_cog(info(client))
