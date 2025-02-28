@@ -105,7 +105,7 @@ class Buttons(discord.ui.View):
                 color=discord.Colour.blurple(),
                 title=f"Ava | {lang.settings_title}",
                 description=lang.settings_description)
-        embed.add_field(name=f'/settings language <{lang.settings_language}>', value='Changed the preferred language.', inline=False)
+        embed.add_field(name=f'/settings language <{lang.settings_language}>', value=lang.settings_lang, inline=False)
         embed.set_footer(text=f"Ava | {lang.version}: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
