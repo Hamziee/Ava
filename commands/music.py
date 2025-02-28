@@ -5,6 +5,8 @@ from discord.ext import commands
 from discord import app_commands
 import yt_dlp as youtube_dl
 import config
+from userLocale import getLang
+import importlib
 
 YTDL_OPTIONS = {
     "format": "bestaudio[ext=webm]/bestaudio/best",
@@ -28,6 +30,17 @@ FFMPEG_OPTIONS = {
 }
 ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
 
+# Function to get language module for a user
+def get_lang_module(user_id):
+    user_locale = getLang(user_id)
+    lang_module = f"lang.music.{user_locale}"
+    try:
+        return importlib.import_module(lang_module)
+    except ModuleNotFoundError:
+        import lang.music.en_US as lang
+        print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        return lang
+
 class VoiceState:
     def __init__(self, bot):
         self.bot = bot
@@ -45,15 +58,26 @@ class VoiceState:
             return
 
         self.current = await self.queue.get()
+        
+        # Safety check for URL
+        if not self.current or "url" not in self.current:
+            print("Invalid song in queue - missing URL")
+            # Try the next song
+            asyncio.create_task(self.play_next(interaction_channel))
+            return
 
-        self.voice.play(
-            discord.FFmpegPCMAudio(self.current["url"], **FFMPEG_OPTIONS),
-            after=lambda _: asyncio.run_coroutine_threadsafe(self.play_next(interaction_channel), self.bot.loop).result(),
-        )
+        try:
+            self.voice.play(
+                discord.FFmpegPCMAudio(self.current["url"], **FFMPEG_OPTIONS),
+                after=lambda _: asyncio.run_coroutine_threadsafe(self.play_next(interaction_channel), self.bot.loop).result(),
+            )
 
-        if interaction_channel:
-            await self.announce_now_playing(interaction_channel)
-
+            if interaction_channel:
+                await self.announce_now_playing(interaction_channel)
+        except Exception as e:
+            print(f"Error playing song: {e}")
+            # Try the next song
+            asyncio.create_task(self.play_next(interaction_channel))
 
     def is_playing(self):
         return self.voice.is_playing() if self.voice else False
@@ -65,26 +89,37 @@ class VoiceState:
             self.voice.stop()
 
     async def start_inactivity_timeout(self):
-        """Handle leaving after 1 minute of inactivity or if the channel is empty."""
+        """Handle leaving after inactivity or if the channel is empty."""
         if self.inactivity_task:
             self.inactivity_task.cancel()
+            self.inactivity_task = None  # Ensure it's set to None
 
         async def inactivity_check():
             await asyncio.sleep(5)
             if self.voice:
                 if not self.is_playing() and self.queue.empty():
                     await self.voice.disconnect()
-                    self.clear()
-                    
+                    self.voice = None  # Reset the voice client reference
+                    self.current = None
+        
         self.inactivity_task = asyncio.create_task(inactivity_check())
+
+    def reset(self):
+        """Reset the voice state but keep the queue."""
+        self.current = None
+        self.stop_next = False
+        if self.inactivity_task:
+            self.inactivity_task.cancel()
+            self.inactivity_task = None
 
     async def announce_now_playing(self, channel):
         """Announce the currently playing song in the specified channel."""
         if self.current:
+            # Using the default en_US language for announcements
+            import lang.music.en_US as lang
             embed = MusicCog.create_embed(
-                "Now Playing",
-                f"[**{self.current['title']}**]({self.current['url']}) by **{self.current['author']}**\n"
-                f"Requested by **{self.current['requester']}** | Duration: {self.current['duration']}s",
+                lang.now_playing,
+                f"{lang.song_info.format(title=self.current['title'], url=self.current['url'], author=self.current['author'], requester=self.current['requester'], duration=self.current['duration'])}",
                 discord.Color.green()
             )
             await channel.send(embed=embed)
@@ -100,43 +135,61 @@ class MusicCog(commands.Cog):
         return self.voice_states[guild_id]
 
     async def join_channel(self, interaction):
+        # Get language for this user
+        lang = get_lang_module(interaction.user.id)
+        
         if not interaction.user.voice or not interaction.user.voice.channel:
             embed = self.create_embed(
-                "Error",
-                "You must be in a voice channel!",
+                lang.error,
+                lang.must_be_in_voice,
                 discord.Color.red()
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return None
+            
         channel = interaction.user.voice.channel
         voice_client = interaction.guild.voice_client
+        
         if voice_client and voice_client.channel != channel:
             embed = self.create_embed(
-                "Error",
-                "I'm already in another voice channel.",
+                lang.error,
+                lang.already_in_another_voice,
                 discord.Color.red()
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return None
+            
         if not voice_client:
-            await channel.connect()
+            voice_client = await channel.connect()
+            state = self.get_voice_state(interaction.guild.id)
+            state.voice = voice_client
+            state.reset()
+        
         return interaction.guild.voice_client
     
     @app_commands.command(name="nowplaying", description="See what's currently playing.")
     async def nowplaying(self, interaction: discord.Interaction):
+        # Get language for this user
+        lang = get_lang_module(interaction.user.id)
+        
         state = self.get_voice_state(interaction.guild.id)
         if state.current:
             embed = self.create_embed(
-                "Now Playing",
-                f"[**{state.current['title']}**]({state.current['url']}) by **{state.current['author']}**\n"
-                f"Requested by **{state.current['requester']}** | Duration: {state.current['duration']}s",
+                lang.now_playing,
+                lang.song_info.format(
+                    title=state.current['title'],
+                    url=state.current['url'],
+                    author=state.current['author'],
+                    requester=state.current['requester'],
+                    duration=state.current['duration']
+                ),
                 discord.Color.green()
             )
             await interaction.response.send_message(embed=embed)
         else:
             embed = self.create_embed(
-                "Now Playing",
-                "No music is currently playing.",
+                lang.now_playing,
+                lang.no_music_playing,
                 discord.Color.orange()
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -145,8 +198,11 @@ class MusicCog(commands.Cog):
     def create_embed(title, description, color=discord.Color.blue()):
         """Create an embed with a footer."""
         embed = discord.Embed(title=title, description=description, color=color)
+        
+        # Using the default language for footer
+        import lang.music.en_US as lang
         embed.set_footer(
-            text=config.FOOTER_TXT + f" - Entirly rewritten Play command for speed & audio quality.",
+            text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.footer_extra}",
             icon_url=config.FOOTER_ICON
         )
         return embed
@@ -154,39 +210,76 @@ class MusicCog(commands.Cog):
     async def search_song(self, query):
         """Search for a song using yt_dlp in a separate thread."""
         try:
-            return await asyncio.to_thread(ytdl.extract_info, query, download=False)
+            data = await asyncio.to_thread(ytdl.extract_info, query, download=False)
+            if not data:
+                return None
+                
+            # Validate data structure
+            if 'entries' in data:
+                # Make sure entries isn't empty
+                if not data['entries']:
+                    return None
+                # Check first entry to make sure it has URL
+                if not data['entries'][0].get('url'):
+                    return None
+            elif not data.get('url'):
+                return None
+                
+            return data
         except Exception as e:
             print(f"Error during search: {e}")
             return None
 
     @app_commands.command(name="play", description="Play a song or add to the queue.")
     async def play(self, interaction: discord.Interaction, query: str):
+        # Get language for this user
+        lang = get_lang_module(interaction.user.id)
+        
         voice_client = await self.join_channel(interaction)
         if not voice_client:
             return
 
         state = self.get_voice_state(interaction.guild.id)
+        state.voice = voice_client
+        state.stop_next = False
 
-        embed = self.create_embed("Searching", f"Searching for `{query}`...")
+        embed = self.create_embed(
+            lang.searching, 
+            lang.searching_for.format(query=query)
+        )
         await interaction.response.send_message(embed=embed)
 
         data = await self.search_song(query)
         if not data:
             embed = self.create_embed(
-                "Error",
-                "Could not find any results for your query.",
+                lang.error,
+                lang.no_results,
                 discord.Color.red()
             )
             await interaction.followup.send(embed=embed)
             return
 
         try:
-            if 'entries' in data:
-                entries = data['entries']
-            else:
+            entries = []
+            if 'entries' in data and data['entries']:
+                entries = [entry for entry in data['entries'] if entry and 'url' in entry]
+            elif data and 'url' in data:
                 entries = [data]
+                
+            if not entries:
+                embed = self.create_embed(
+                    lang.error,
+                    lang.invalid_song_data,
+                    discord.Color.red()
+                )
+                await interaction.followup.send(embed=embed)
+                return
 
             for entry in entries:
+                # Validate entry has required fields
+                if not entry or 'url' not in entry:
+                    continue
+                    
                 song = {
                     "url": entry["url"],
                     "title": entry.get("title", "Unknown Title"),
@@ -197,40 +290,50 @@ class MusicCog(commands.Cog):
                 await state.queue.put(song)
 
                 embed = self.create_embed(
-                    "Song Added",
-                    f"[**{song['title']}**]({song['url']}) by **{song['author']}**\n"
-                    f"Requested by **{song['requester']}** | Duration: {song['duration']}s"
+                    lang.song_added,
+                    lang.song_info.format(
+                        title=song['title'],
+                        url=song['url'],
+                        author=song['author'],
+                        requester=song['requester'],
+                        duration=song['duration']
+                    )
                 )
                 await interaction.followup.send(embed=embed)
 
             if not state.is_playing():
-                state.voice = voice_client
                 await state.play_next(interaction.channel)
         except Exception as e:
+            print(f"Play command error: {e}")  # Better logging
             embed = self.create_embed(
-                "Error",
-                f"An error occurred while processing the song: {e}",
+                lang.error,
+                lang.processing_error.format(error=str(e)),
                 discord.Color.red()
             )
             await interaction.followup.send(embed=embed)
 
-
     @app_commands.command(name="skip", description="Skip the current song.")
     async def skip(self, interaction: discord.Interaction):
+        # Get language for this user
+        lang = get_lang_module(interaction.user.id)
+        
         state = self.get_voice_state(interaction.guild.id)
         if state.voice and state.voice.is_playing():
             state.voice.stop()
-            embed = self.create_embed("Skipped", "Skipped the current song.")
+            embed = self.create_embed(lang.skipped, lang.skipped_success)
             await interaction.response.send_message(embed=embed)
         else:
-            embed = self.create_embed("Error", "No music is currently playing.", discord.Color.red())
+            embed = self.create_embed(lang.error, lang.no_music_playing, discord.Color.red())
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @app_commands.command(name="queue", description="View the current song queue.")
     async def queue(self, interaction: discord.Interaction, page: int = 1):
+        # Get language for this user
+        lang = get_lang_module(interaction.user.id)
+        
         state = self.get_voice_state(interaction.guild.id)
         if state.queue.empty():
-            embed = self.create_embed("Queue", "The queue is empty.", discord.Color.orange())
+            embed = self.create_embed(lang.queue_title, lang.queue_empty, discord.Color.orange())
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
@@ -239,7 +342,10 @@ class MusicCog(commands.Cog):
         max_pages = (len(queue) + items_per_page - 1) // items_per_page
 
         if page < 1 or page > max_pages:
-            embed = self.create_embed("Error", f"Invalid page. Please select a page between 1 and {max_pages}.")
+            embed = self.create_embed(
+                lang.error, 
+                lang.invalid_page.format(max_pages=max_pages)
+            )
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
@@ -247,28 +353,33 @@ class MusicCog(commands.Cog):
         end = start + items_per_page
         queue_str = "\n".join(
             [
-                f"{i+1}. [**{song['title']}**]({song['url']}) by **{song['author']}**\n"
-                f"Requested by **{song['requester']}** | Duration: {song['duration']}s"
+                f"{i+1}. {lang.song_info.format(title=song['title'], url=song['url'], author=song['author'], requester=song['requester'], duration=song['duration'])}"
                 for i, song in enumerate(queue[start:end], start=start)
             ]
         )
-        embed = self.create_embed("Queue", f"**Page {page}/{max_pages}**\n\n{queue_str}")
+        embed = self.create_embed(
+            lang.queue_title, 
+            lang.queue_page.format(page=page, max_pages=max_pages, queue_str=queue_str)
+        )
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="leave", description="Leave the voice channel and clear the queue.")
     async def leave(self, interaction: discord.Interaction):
+        # Get language for this user
+        lang = get_lang_module(interaction.user.id)
+        
         state = self.get_voice_state(interaction.guild.id)
         if state.voice:
             await state.voice.disconnect()
             state.clear()
             self.voice_states.pop(interaction.guild.id, None)
             embed = self.create_embed(
-                "Disconnected",
-                "Left the voice channel and cleared the queue."
+                lang.disconnected,
+                lang.disconnect_success
             )
             await interaction.response.send_message(embed=embed)
         else:
-            embed = self.create_embed("Error", "I'm not in a voice channel.", discord.Color.red())
+            embed = self.create_embed(lang.error, lang.not_in_voice, discord.Color.red())
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
 async def setup(bot):
