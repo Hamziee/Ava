@@ -1,3 +1,2 @@
-help.py
 info.py
 music.py

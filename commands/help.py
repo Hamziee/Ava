@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import config
+from userLocale import getLang
+import importlib
 AVA_VERSION = config.AVA_VERSION
 
 class Buttons(discord.ui.View):
@@ -12,64 +14,99 @@ class Buttons(discord.ui.View):
     # General
     @discord.ui.button(label="General",style=discord.ButtonStyle.primary)
     async def general_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.help.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.help.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         embed = discord.Embed(
             color=discord.Colour.blurple(),
-            title="Ava | General Commands",
-            description="Here is some information about my commands :)")
-        embed.add_field(name='/help', value='Shows up this.', inline=False)
-        embed.add_field(name='/about', value='Some information about me!', inline=False)
-        embed.add_field(name='/embed', value='Make an embed message.', inline=False)
-        embed.add_field(name='/chat', value='Chat with my AI!', inline=False)
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
+            title=f"Ava | {lang.general_title}",
+            description=lang.general_description)
+        embed.add_field(name='/help', value=lang.general_help, inline=False)
+        embed.add_field(name='/about', value=lang.general_about, inline=False)
+        embed.add_field(name='/embed', value=lang.general_embed, inline=False)
+        embed.set_footer(text=f"Ava | {lang.version}: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
     # Fun
     @discord.ui.button(label="Fun",style=discord.ButtonStyle.primary)
     async def fun_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.help.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.help.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         embed = discord.Embed(
             color=discord.Colour.blurple(),
-            title="Ava | Enjoyable Commands",
-            description="Here is some information about my commands :)")
-        embed.add_field(name='/hug', value='Hug your friend/lover!', inline=False)
-        embed.add_field(name='/kiss', value='Kiss your friend/lover!', inline=False)
-        embed.add_field(name='/headpats', value='Give headpats to your friend/lover!', inline=False)
-        embed.add_field(name='/slap', value='Slap someone who deserves it!', inline=False)
-        embed.add_field(name='/cats', value='Get your daily dose of cat pictures!', inline=False)
-        embed.add_field(name='/xiaojie', value='Get your daily dose of xiaojie cat pictures!', inline=False)
-        embed.add_field(name='/dogs', value='Get your daily dose of dog pictures!', inline=False)
-        embed.add_field(name='/ball', value='Get the truth of your world breaking question.', inline=False)
-        embed.add_field(name='/trivia', value='Test your knowledge with a trivia question!', inline=False)
-        embed.add_field(name='/typerace', value='Test your typing skills in a type race!', inline=False)
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
+            title=f"Ava | {lang.fun_title}",
+            description=lang.fun_description)
+        embed.add_field(name='/hug', value=lang.fun_hug, inline=False)
+        embed.add_field(name='/kiss', value=lang.fun_kiss, inline=False)
+        embed.add_field(name='/headpats', value=lang.fun_headpats, inline=False)
+        embed.add_field(name='/slap', value=lang.fun_slap, inline=False)
+        embed.add_field(name='/cats', value=lang.fun_cats, inline=False)
+        embed.add_field(name='/xiaojie', value=lang.fun_xiaojie, inline=False)
+        embed.add_field(name='/dogs', value=lang.fun_dogs, inline=False)
+        embed.add_field(name='/ball', value=lang.fun_ball, inline=False)
+        embed.add_field(name='/trivia', value=lang.fun_trivia, inline=False)
+        embed.add_field(name='/typerace', value=lang.fun_typerace, inline=False)
+        embed.set_footer(text=f"Ava | {lang.version}: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
     # Music
     @discord.ui.button(label="Music",style=discord.ButtonStyle.primary)
     async def music_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.help.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.help.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         embed = discord.Embed(
                 color=discord.Colour.blurple(),
-                title="Music | Music Commands",
-                description="Here is some Information about my music commands :)")
-        embed.add_field(name='/play <query>', value='Play a song or add it to the queue.', inline=False)
-        embed.add_field(name='/nowplaying', value='See what’s currently playing.', inline=False)
-        embed.add_field(name='/skip', value='Skip the current song.', inline=False)
-        embed.add_field(name='/queue [page]', value='View the current song queue. (Page is optional.)', inline=False)
-        embed.add_field(name='/leave', value='Leave the voice channel and clear the queue.', inline=False)
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
+                title=f"Ava | {lang.music_title}",
+                description=lang.music_description)
+        embed.add_field(name=f'/play <{lang.music_query}>', value=lang.music_play, inline=False)
+        embed.add_field(name='/nowplaying', value=lang.music_nowplaying, inline=False)
+        embed.add_field(name='/skip', value=lang.music_skip, inline=False)
+        embed.add_field(name=f'/queue [{lang.music_page}]', value=lang.music_queue, inline=False)
+        embed.add_field(name='/leave', value=lang.music_leave, inline=False)
+        embed.set_footer(text=f"Ava | {lang.version}: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
     
     # settings
     @discord.ui.button(label="Settings",style=discord.ButtonStyle.primary)
     async def settings_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.help.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.help.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         embed = discord.Embed(
                 color=discord.Colour.blurple(),
-                title="Music | Music Commands",
-                description="Here is some Information about my music commands :)")
-        embed.add_field(name='/settings language <language>', value='Changed the preferred language.', inline=False)
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
+                title=f"Ava | {lang.settings_title}",
+                description=lang.settings_description)
+        embed.add_field(name=f'/settings language <{lang.settings_language}>', value='Changed the preferred language.', inline=False)
+        embed.set_footer(text=f"Ava | {lang.version}: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.defer()
         await interaction.edit_original_response(embed=embed, view=Buttons())
 
@@ -81,11 +118,20 @@ class help(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def help(self, interaction: discord.Interaction):
+        ### LANG SECTION ###
+        user_locale = getLang(interaction.user.id)
+        lang_module = f"lang.help.{user_locale}"
+        try:
+            lang = importlib.import_module(lang_module)
+        except ModuleNotFoundError:
+            import lang.help.en_US as lang
+            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
+        ### END OF LANG SECTION ###
         embed = discord.Embed(
             color=discord.Colour.blurple(),
-            title="Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
-            description="Choose a category below.")
-        embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
+            title=f"{lang.help_title} <:Ava_CatBlush:1210004576082853939>",
+            description=lang.help_description)
+        embed.set_footer(text=f"Ava | {lang.version}: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
         await interaction.response.send_message(embed=embed, view=Buttons())
     
     @commands.Cog.listener()
