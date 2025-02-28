@@ -43,7 +43,7 @@ music_leave = "Leave the voice channel and clear the queue."
 settings_title = "Settings Commands"
 settings_description = "Here is some information about my commands :)"
 settings_language = "language"
-settings_lang = "Changed the preferred language."
+settings_lang = "Change the preferred language."
 
 # help
 help_title = "Hi I'm Ava!"
