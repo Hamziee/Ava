@@ -15,9 +15,9 @@ class SettingsCog(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.choices(locale=[
-        app_commands.Choice(name="English (US)", value="en_US"),
-        app_commands.Choice(name="Dutch (NL)", value="nl_NL"),
-        app_commands.Choice(name="Romanian (RO)", value="ro_RO")
+        app_commands.Choice(name="English (en_US)", value="en_US"),
+        app_commands.Choice(name="Dutch (nl_NL)", value="nl_NL"),
+        app_commands.Choice(name="Romanian (ro_RO)", value="ro_RO")
     ])
     async def language(self, interaction: discord.Interaction, locale: str):
         setLang(interaction.user.id, locale)
