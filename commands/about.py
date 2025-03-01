@@ -4,6 +4,7 @@ from discord import app_commands
 import config
 from userLocale import getLang
 import importlib
+import credits
 
 class about(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -28,6 +29,8 @@ class about(commands.Cog):
                 color=discord.Colour.blurple(),
                 title=lang.title,
                 description=lang.description)
+            embed.add_field(name=f":flag_nl: {lang.lang_nltrans}", value=credits.lang_nl, inline=True)
+            embed.add_field(name=f":flag_ro: {lang.lang_rotrans}", value=credits.lang_ro, inline=True)
             embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await interaction.response.send_message(embed=embed)
         except Exception as e:
