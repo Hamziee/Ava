@@ -8,6 +8,16 @@ import config
 from userLocale import getLang
 import importlib
 
+# Radio stations dictionary
+RADIO_STATIONS = {
+    "truckersfm": {
+        "url": "https://radio.truckers.fm/",
+        "name": "TruckersFM",
+        "description": "The #1 Hit Music Station for Truckers"
+    }
+    # Add more radio stations here as needed
+}
+
 YTDL_OPTIONS = {
     "format": "bestaudio[ext=webm]/bestaudio/best",
     "extractaudio": True,
@@ -50,57 +60,110 @@ class VoiceState:
         self.loop = False
         self.stop_next = False
         self.inactivity_task = None
+        self.is_radio = False  # New flag to track if currently playing radio
+
+    async def stop_playback(self):
+        """Safely stop current playback and wait for FFMPEG to terminate."""
+        if self.voice and self.voice.is_playing():
+            self.voice.stop()
+            # Give FFMPEG time to properly terminate
+            for _ in range(3):  # Try up to 3 times
+                await asyncio.sleep(0.5)
+                if not self.voice.is_playing():
+                    break
 
     async def play_next(self, interaction_channel=None):
-        if self.queue.empty() or self.stop_next:
-            self.current = None
-            await self.start_inactivity_timeout()
-            return
-
-        self.current = await self.queue.get()
-        
-        # Safety check for URL
-        if not self.current or "url" not in self.current:
-            print("Invalid song in queue - missing URL")
-            # Try the next song
-            asyncio.create_task(self.play_next(interaction_channel))
-            return
-
         try:
-            self.voice.play(
-                discord.FFmpegPCMAudio(self.current["url"], **FFMPEG_OPTIONS),
-                after=lambda _: asyncio.run_coroutine_threadsafe(self.play_next(interaction_channel), self.bot.loop).result(),
-            )
+            # If we have songs in queue and radio is playing, stop radio mode
+            if not self.queue.empty() and self.is_radio:
+                self.is_radio = False
+                await self.stop_playback()
+                if interaction_channel:
+                    # Get language for announcements
+                    import lang.music.en_US as lang
+                    embed = MusicCog.create_embed(
+                        lang.radio_title,
+                        lang.radio_stopped,
+                        discord.Color.blue()
+                    )
+                    await interaction_channel.send(embed=embed)
+
+            if (self.queue.empty() and not self.is_radio) or self.stop_next:
+                self.current = None
+                await self.start_inactivity_timeout()
+                return
+
+            if not self.is_radio:  # Only get next from queue if not radio
+                self.current = await self.queue.get()
+            
+            # Safety check for URL
+            if not self.current or "url" not in self.current:
+                print("Invalid song in queue - missing URL")
+                # Try the next song
+                asyncio.create_task(self.play_next(interaction_channel))
+                return
+
+            # Ensure any existing playback is stopped
+            await self.stop_playback()
+
+            # Create new FFmpeg player
+            audio_source = discord.FFmpegPCMAudio(self.current["url"], **FFMPEG_OPTIONS)
+            
+            def after_callback(error):
+                if error:
+                    print(f"Error in playback: {error}")
+                if not self.is_radio:  # Only auto-play next for non-radio
+                    coro = self.play_next(interaction_channel)
+                    fut = asyncio.run_coroutine_threadsafe(coro, self.bot.loop)
+                    try:
+                        fut.result()
+                    except Exception as e:
+                        print(f"Error in play_next callback: {e}")
+
+            self.voice.play(audio_source, after=after_callback)
 
             if interaction_channel:
                 await self.announce_now_playing(interaction_channel)
         except Exception as e:
-            print(f"Error playing song: {e}")
-            # Try the next song
-            asyncio.create_task(self.play_next(interaction_channel))
+            print(f"Error in play_next: {e}")
+            if not self.is_radio:
+                asyncio.create_task(self.play_next(interaction_channel))
 
     def is_playing(self):
         return self.voice.is_playing() if self.voice else False
 
     def clear(self):
+        """Clear the queue and stop current playback."""
         self.queue = asyncio.Queue()
         self.stop_next = True
-        if self.voice and self.voice.is_playing():
-            self.voice.stop()
+        self.is_radio = False
+        asyncio.create_task(self.stop_playback())
 
     async def start_inactivity_timeout(self):
         """Handle leaving after inactivity or if the channel is empty."""
         if self.inactivity_task:
             self.inactivity_task.cancel()
-            self.inactivity_task = None  # Ensure it's set to None
+            self.inactivity_task = None
 
         async def inactivity_check():
-            await asyncio.sleep(5)
-            if self.voice:
-                if not self.is_playing() and self.queue.empty():
-                    await self.voice.disconnect()
-                    self.voice = None  # Reset the voice client reference
-                    self.current = None
+            while True:
+                await asyncio.sleep(5)
+                if self.voice and self.voice.channel:
+                    # Get number of non-bot members in voice channel
+                    members = [m for m in self.voice.channel.members if not m.bot]
+                    
+                    # Leave if:
+                    # 1. Channel is empty (no non-bot members)
+                    # 2. Not playing anything and queue is empty (for regular music)
+                    if len(members) == 0 or (not self.is_radio and not self.is_playing() and self.queue.empty()):
+                        print(f"Disconnecting due to {'empty channel' if len(members) == 0 else 'inactivity'}")
+                        await self.voice.disconnect()
+                        self.voice = None
+                        self.current = None
+                        self.is_radio = False
+                        break
+                else:
+                    break
         
         self.inactivity_task = asyncio.create_task(inactivity_check())
 
@@ -108,6 +171,7 @@ class VoiceState:
         """Reset the voice state but keep the queue."""
         self.current = None
         self.stop_next = False
+        self.is_radio = False
         if self.inactivity_task:
             self.inactivity_task.cancel()
             self.inactivity_task = None
@@ -316,7 +380,8 @@ class MusicCog(commands.Cog):
                 )
                 await interaction.followup.send(embed=embed)
 
-            if not state.is_playing():
+            # If radio is playing or not playing anything, start playing from queue
+            if state.is_radio or not state.is_playing():
                 await state.play_next(interaction.channel)
         except Exception as e:
             print(f"Play command error: {e}")  # Better logging
@@ -409,6 +474,73 @@ class MusicCog(commands.Cog):
         else:
             embed = self.create_embed(lang.error, lang.not_in_voice, discord.Color.red(), lang)
             await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    @app_commands.command(name="radio", description="Play a radio station")
+    @app_commands.choices(station=[
+        app_commands.Choice(name="TruckersFM", value="truckersfm")
+    ])
+    async def radio(self, interaction: discord.Interaction, station: str):
+        # Get language for this user
+        lang = get_lang_module(interaction.user.id)
+        
+        if station not in RADIO_STATIONS:
+            embed = self.create_embed(
+                lang.error,
+                lang.radio_not_found,
+                discord.Color.red(),
+                lang
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        voice_client = await self.join_channel(interaction)
+        if not voice_client:
+            return
+
+        state = self.get_voice_state(interaction.guild.id)
+        
+        # If we were playing music before, show transition message
+        if not state.is_radio and (state.is_playing() or not state.queue.empty()):
+            embed = self.create_embed(
+                lang.radio_title,
+                lang.radio_switched,
+                discord.Color.blue(),
+                lang
+            )
+            await interaction.channel.send(embed=embed)
+
+        state.voice = voice_client
+        state.stop_next = False
+        state.is_radio = True
+
+        # Clear current queue when switching to radio
+        state.queue = asyncio.Queue()
+        await state.stop_playback()
+
+        # Set up radio stream
+        radio_info = RADIO_STATIONS[station]
+        state.current = {
+            "url": radio_info["url"],
+            "title": radio_info["name"],
+            "duration": "24/7",
+            "author": radio_info["description"],
+            "requester": interaction.user.display_name,
+            "requester_id": interaction.user.id
+        }
+
+        embed = self.create_embed(
+            lang.radio_title,
+            lang.radio_playing.format(name=radio_info["name"], description=radio_info["description"]),
+            discord.Color.blue(),
+            lang
+        )
+        await interaction.response.send_message(embed=embed)
+        
+        # Start the inactivity check immediately for radio
+        await state.start_inactivity_timeout()
+        
+        # Start playing the radio
+        await state.play_next(interaction.channel)
 
 async def setup(bot):
     await bot.add_cog(MusicCog(bot))
