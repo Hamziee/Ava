@@ -5,8 +5,7 @@ import config
 import sys
 import requests
 from importlib.metadata import distributions
-from userLocale import getLang
-import importlib
+from i18n import i18n
 
 class info(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -16,15 +15,9 @@ class info(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def info(self, interaction: discord.Interaction):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.info.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.info.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('info', user_locale)
+
         try:
             # Version Checker
             url = "https://cdn.hamzie.site/Ava/VRC/core.txt"
@@ -49,11 +42,24 @@ class info(commands.Cog):
                 color=discord.Colour.blurple(),
                 title=lang.title,
                 description=lang.description)
-            embed.add_field(name=lang.core, value=f'{lang.running} Ava {config.AVA_VERSION} | ({lang.latest}: {remote_version})\nAva {lang.cnf_version}: {config.CONFIG_VERSION}\nPython {python_version}', inline=False)
-            embed.add_field(name=lang.py_packages, value=package_string, inline=False)
-            embed.add_field(name=f"Ava {lang.optional_mods}", value=f'TheCatAPI: {cats_string} | ({lang.new_system})', inline=False)
+            embed.add_field(
+                name=lang.core, 
+                value=f'{lang.running} Ava {config.AVA_VERSION} | ({lang.latest}: {remote_version})\nAva {lang.cnf_version}: {config.CONFIG_VERSION}\nPython {python_version}', 
+                inline=False
+            )
+            embed.add_field(
+                name=lang.py_packages, 
+                value=package_string, 
+                inline=False
+            )
+            embed.add_field(
+                name=f"Ava {lang.optional_mods}", 
+                value=f'TheCatAPI: {cats_string} | ({lang.new_system})', 
+                inline=False
+            )
             embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await interaction.response.send_message(embed=embed)
+            
         except Exception as e:
             print(e)
             await interaction.followup.send(content=lang.error)

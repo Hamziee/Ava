@@ -5,17 +5,30 @@ from discord.ext import commands
 from discord import app_commands
 import yt_dlp as youtube_dl
 import config
-from userLocale import getLang
-import importlib
+from i18n import i18n
 
-# Radio stations dictionary
+# Radio stations dictionary, alphabetically sorted with EN first
 RADIO_STATIONS = {
-    "truckersfm": {
+    "en_truckersfm": {
         "url": "https://radio.truckers.fm/",
-        "name": "TruckersFM",
+        "name": "[EN] TruckersFM",
         "description": "The #1 Hit Music Station for Truckers"
+    },
+    "nl_bnr": {
+        "url": "https://stream.bnr.nl/bnr_mp3_128_20",
+        "name": "[NL] BNR Nieuwsradio",
+        "description": "24/7 het laatste nieuws, weer, verkeer en business updates"
+    },
+    "nl_funx_fissa": {
+        "url": "https://icecast.omroep.nl/funx-dance-bb-mp3",
+        "name": "[NL] FunX Fissa",
+        "description": "Luister 24/7 non-stop naar de beste party tracks!"
+    },
+    "nl_funx_hiphop": {
+        "url": "https://icecast.omroep.nl/funx-hiphop-bb-mp3",
+        "name": "[NL] FunX Hip Hop",
+        "description": "De beste hip-hop, R&B en urban muziek, non-stop!"
     }
-    # Add more radio stations here as needed
 }
 
 YTDL_OPTIONS = {
@@ -40,16 +53,10 @@ FFMPEG_OPTIONS = {
 }
 ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
 
-# Function to get language module for a user
+# Replace the get_lang_module function with this simpler version
 def get_lang_module(user_id):
-    user_locale = getLang(user_id)
-    lang_module = f"lang.music.{user_locale}"
-    try:
-        return importlib.import_module(lang_module)
-    except ModuleNotFoundError:
-        import lang.music.en_US as lang
-        print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        return lang
+    user_locale = i18n.get_locale(user_id)
+    return i18n.get_module('music', user_locale)
 
 class VoiceState:
     def __init__(self, bot):
@@ -74,13 +81,11 @@ class VoiceState:
 
     async def play_next(self, interaction_channel=None):
         try:
-            # If we have songs in queue and radio is playing, stop radio mode
             if not self.queue.empty() and self.is_radio:
                 self.is_radio = False
                 await self.stop_playback()
                 if interaction_channel:
-                    # Get language for announcements
-                    import lang.music.en_US as lang
+                    lang = get_lang_module(self.current["requester_id"])
                     embed = MusicCog.create_embed(
                         lang.radio_title,
                         lang.radio_stopped,
@@ -180,7 +185,7 @@ class VoiceState:
         """Announce the currently playing song in the specified channel."""
         if self.current:
             # Using the default en_US language for announcements
-            import lang.music.en_US as lang
+            lang = get_lang_module(self.current["requester_id"])
             embed = MusicCog.create_embed(
                 lang.now_playing,
                 f"{lang.song_info.format(title=self.current['title'], url=self.current['url'], author=self.current['author'], requester=self.current['requester'], duration=self.current['duration'])}",
@@ -267,9 +272,9 @@ class MusicCog(commands.Cog):
         """Create an embed with a footer using the provided language module."""
         embed = discord.Embed(title=title, description=description, color=color)
         
-        # Use the provided language module or default to en_US
+        # Use the provided language module or default to getting a new one
         if not lang:
-            import lang.music.en_US as lang
+            lang = i18n.get_module('music', 'en_US')
             
         embed.set_footer(
             text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.footer_extra}",
@@ -304,7 +309,6 @@ class MusicCog(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=False)
     @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     async def play(self, interaction: discord.Interaction, query: str):
-        # Get language for this user
         lang = get_lang_module(interaction.user.id)
         
         voice_client = await self.join_channel(interaction)
@@ -476,11 +480,15 @@ class MusicCog(commands.Cog):
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @app_commands.command(name="radio", description="Play a radio station")
+    @app_commands.allowed_installs(guilds=True, users=False)
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     @app_commands.choices(station=[
-        app_commands.Choice(name="TruckersFM", value="truckersfm")
+        app_commands.Choice(name="[EN] TruckersFM", value="en_truckersfm"),
+        app_commands.Choice(name="[NL] BNR Nieuwsradio", value="nl_bnr"),
+        app_commands.Choice(name="[NL] FunX Fissa", value="nl_funx_fissa"),
+        app_commands.Choice(name="[NL] FunX Hip Hop", value="nl_funx_hiphop")
     ])
     async def radio(self, interaction: discord.Interaction, station: str):
-        # Get language for this user
         lang = get_lang_module(interaction.user.id)
         
         if station not in RADIO_STATIONS:
