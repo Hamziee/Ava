@@ -19,7 +19,7 @@
     "by": "Afbeelding door"
   },
   "economy": {
-    "currency": "euro's",
+    "currency": "euro",
     "version": "versie",
     "balance_text": "Huidig saldo",
     "balance_title": "💰 {username}'s Saldo",
