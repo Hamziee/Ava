@@ -3,8 +3,7 @@ from discord.ext import commands
 from discord import app_commands
 import httpx
 import config
-from userLocale import getLang
-import importlib
+from i18n import i18n
 
 class Slap(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -15,15 +14,9 @@ class Slap(commands.Cog):
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.rename(member='person')
     async def slap(self, interaction: discord.Interaction, member: discord.User):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.slap.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.slap.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('slap', user_locale)
+
         try:
             async with httpx.AsyncClient() as client:
                 if member.id == interaction.user.id:
@@ -50,6 +43,7 @@ class Slap(commands.Cog):
                     embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
                     await interaction.response.send_message(content=lang.slap_toava, embed=embed)
                     return
+
                 response = await client.get("https://api.hamzie.site/v1/gifs/slap")
                 response.raise_for_status()
                 data = response.json()
@@ -61,6 +55,7 @@ class Slap(commands.Cog):
                 embed.set_image(url=image_url)
                 embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
                 await interaction.response.send_message(embed=embed)
+
         except httpx.HTTPError as http_err:
             print(f'HTTP error occurred: {http_err}')
         except Exception as err:

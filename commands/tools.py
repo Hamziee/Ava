@@ -1,9 +1,8 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-from userLocale import getLang
 import config
-import importlib
+from i18n import i18n
 
 class toolsCog(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -15,15 +14,8 @@ class toolsCog(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def userinfo(self, interaction: discord.Interaction, member: discord.User):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.tools.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.tools.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('tools', user_locale)
        
         fetched_member = await self.client.fetch_user(member.id)
        
@@ -40,12 +32,10 @@ class toolsCog(commands.Cog):
         
         # Get highest resolution avatar (4096px)
         if member.avatar:
-            # Check if size parameter already exists in the URL
             if "?size=" in member.avatar.url:
                 high_res_avatar = member.avatar.url.split("?size=")[0] + "?size=4096"
             else:
                 high_res_avatar = member.avatar.url + "?size=4096"
-            # Convert webp to png for higher quality
             high_res_avatar = high_res_avatar.replace(".webp", ".png")
         else:
             high_res_avatar = member.default_avatar.url
@@ -54,12 +44,10 @@ class toolsCog(commands.Cog):
         
         # Get highest resolution banner (4096px) if it exists
         if fetched_member.banner:
-            # Check if size parameter already exists in the URL
             if "?size=" in fetched_member.banner.url:
                 high_res_banner = fetched_member.banner.url.split("?size=")[0] + "?size=4096"
             else:
                 high_res_banner = fetched_member.banner.url + "?size=4096"
-            # Convert webp to png for higher quality
             high_res_banner = high_res_banner.replace(".webp", ".png")
             
             embed.set_image(url=high_res_banner)
@@ -83,22 +71,11 @@ class toolsCog(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     async def serverinfo(self, interaction: discord.Interaction):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.tools.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.tools.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('tools', user_locale)
         
         guild = interaction.guild
-        
-        # Fetch guild with all features to ensure we get complete data
         fetched_guild = await self.client.fetch_guild(guild.id, with_counts=True)
-        
-        # Fetch guild owner details
         guild_owner = await self.client.fetch_user(guild.owner_id)
         
         embed = discord.Embed(
@@ -109,12 +86,10 @@ class toolsCog(commands.Cog):
         
         # Get highest resolution guild icon (4096px)
         if guild.icon:
-            # Check if size parameter already exists in the URL
             if "?size=" in guild.icon.url:
                 high_res_icon = guild.icon.url.split("?size=")[0] + "?size=4096"
             else:
                 high_res_icon = guild.icon.url + "?size=4096"
-            # Convert webp to png for higher quality
             high_res_icon = high_res_icon.replace(".webp", ".png")
             
             embed.set_thumbnail(url=high_res_icon)
@@ -124,12 +99,10 @@ class toolsCog(commands.Cog):
         
         # Get highest resolution guild banner (4096px) if it exists
         if guild.banner:
-            # Check if size parameter already exists in the URL
             if "?size=" in guild.banner.url:
                 high_res_banner = guild.banner.url.split("?size=")[0] + "?size=4096"
             else:
                 high_res_banner = guild.banner.url + "?size=4096"
-            # Convert webp to png for higher quality
             high_res_banner = high_res_banner.replace(".webp", ".png")
             
             embed.set_image(url=high_res_banner)
@@ -147,40 +120,33 @@ class toolsCog(commands.Cog):
         boost_info = f"{lang.serverinfo_level}: {guild.premium_tier}\n"
         boost_info += f"{lang.serverinfo_boosts}: {guild.premium_subscription_count}\n"
         
-        # Features list - convert to a readable format
+        # Features list
         if guild.features:
             features_list = ", ".join([feature.replace("_", " ").title() for feature in guild.features])
         else:
             features_list = lang.serverinfo_no_features
             
-        # Add fields to embed
         embed.add_field(name=lang.serverinfo_generalinfo, value=general_info, inline=False)
         embed.add_field(name=lang.serverinfo_boost, value=boost_info, inline=True)
         embed.add_field(name=lang.serverinfo_features, value=features_list, inline=True)
-        
-        # Add download links
         embed.add_field(name=lang.serverinfo_downloads, value=f"{guild_icon_download}{guild_banner_download}", inline=False)
         
         # Add server splash image if it exists
         if guild.splash:
-            # Check if size parameter already exists in the URL
             if "?size=" in guild.splash.url:
                 high_res_splash = guild.splash.url.split("?size=")[0] + "?size=4096"
             else:
                 high_res_splash = guild.splash.url + "?size=4096"
-            # Convert webp to png for higher quality
             high_res_splash = high_res_splash.replace(".webp", ".png")
             
             embed.add_field(name=lang.serverinfo_splash, value=f"[{lang.serverinfo_splash_download}]({high_res_splash})", inline=True)
         
         # Add discovery splash if it exists
         if hasattr(guild, 'discovery_splash') and guild.discovery_splash:
-            # Check if size parameter already exists in the URL
             if "?size=" in guild.discovery_splash.url:
                 high_res_discovery = guild.discovery_splash.url.split("?size=")[0] + "?size=4096"
             else:
                 high_res_discovery = guild.discovery_splash.url + "?size=4096"
-            # Convert webp to png for higher quality
             high_res_discovery = high_res_discovery.replace(".webp", ".png")
             
             embed.add_field(name=lang.serverinfo_discovery, value=f"[{lang.serverinfo_discovery_download}]({high_res_discovery})", inline=True)

@@ -5,8 +5,7 @@ import aiohttp
 import random
 import asyncio
 import config
-from userLocale import getLang
-import importlib
+from i18n import i18n
 
 class Games(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -69,20 +68,14 @@ class Games(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def typerace(self, interaction: discord.Interaction):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.games.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.games.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('games', user_locale)
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get("https://fakerapi.it/api/v1/texts?_quantity=1&_characters=150") as response:
                     if response.status != 200:
-                        await interaction.response.send_message(content="Failed to fetch a typing challenge. Try again later!")
+                        await interaction.response.send_message(content=lang.error)
                         return
 
                     data = await response.json()
@@ -94,7 +87,7 @@ class Games(commands.Cog):
                 title="⌨️ Type Race",
                 description=f"{lang.typeracer_description}\n\n**{sentence}**"
             )
-            embed.set_footer(text=config.FOOTER_TXT + " - Start typing now!")
+            embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION}")
             await interaction.response.send_message(embed=embed)
 
             def check(message: discord.Message):
@@ -111,28 +104,21 @@ class Games(commands.Cog):
                 else:
                     await interaction.followup.send(content=lang.typeracer_incorrect)
             except asyncio.TimeoutError:
-                await interaction.followup.send(content=lang.typeracer_timesup)
+                await interaction.followup.send(content=lang.typeracter_timesup)
 
         except Exception as e:
             print(e)
-            await interaction.response.send_message(content="An error occurred while running the type race.")
+            await interaction.response.send_message(content=lang.error)
     
     @app_commands.command(name="8ball", description="Get the truth of your world breaking question.")
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def ball(self, interaction: discord.Interaction, question: str):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.games.{user_locale}"
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('games', user_locale)
+
         try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.games.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
-        try:
-            responses = lang.ball_responses
-            answer = random.choice(responses)
+            answer = random.choice(lang.ball_responses)
             embed = discord.Embed(
                 color=discord.Colour.blurple(),
                 title=f"{lang.ball_title} {question}",
@@ -143,7 +129,6 @@ class Games(commands.Cog):
         except Exception as e:
             print(e)
             await interaction.followup.send(content=lang.error)
-
 
 async def setup(client: commands.Bot) -> None:
     await client.add_cog(Games(client))

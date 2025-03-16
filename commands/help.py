@@ -2,27 +2,20 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import config
-from userLocale import getLang
-import importlib
+from i18n import i18n
+
 AVA_VERSION = config.AVA_VERSION
 
 class Buttons(discord.ui.View):
     def __init__(self, *, timeout=180):
         super().__init__(timeout=timeout)
 
-    
     # General
     @discord.ui.button(label="General",style=discord.ButtonStyle.primary)
     async def general_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.help.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.help.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('help', user_locale)
+
         embed = discord.Embed(
             color=discord.Colour.blurple(),
             title=f"Ava | {lang.general_title}",
@@ -37,15 +30,9 @@ class Buttons(discord.ui.View):
     # Fun
     @discord.ui.button(label="Fun",style=discord.ButtonStyle.primary)
     async def fun_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.help.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.help.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('help', user_locale)
+
         embed = discord.Embed(
             color=discord.Colour.blurple(),
             title=f"Ava | {lang.fun_title}",
@@ -67,15 +54,9 @@ class Buttons(discord.ui.View):
     # Music
     @discord.ui.button(label="Music",style=discord.ButtonStyle.primary)
     async def music_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.help.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.help.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('help', user_locale)
+
         embed = discord.Embed(
                 color=discord.Colour.blurple(),
                 title=f"Ava | {lang.music_title}",
@@ -92,15 +73,9 @@ class Buttons(discord.ui.View):
     # settings
     @discord.ui.button(label="Settings",style=discord.ButtonStyle.primary)
     async def settings_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.help.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.help.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('help', user_locale)
+
         embed = discord.Embed(
                 color=discord.Colour.blurple(),
                 title=f"Ava | {lang.settings_title}",
@@ -118,15 +93,9 @@ class help(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def help(self, interaction: discord.Interaction):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.help.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.help.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('help', user_locale)
+
         embed = discord.Embed(
             color=discord.Colour.blurple(),
             title=f"{lang.help_title} <:Ava_CatBlush:1210004576082853939>",
@@ -141,12 +110,11 @@ class help(commands.Cog):
 
         if self.client.user.mentioned_in(message) and not (message.mention_everyone):
             embed = discord.Embed(
-            color=discord.Colour.blurple(),
-            title="Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
-            description="Choose a category below.")
-            embed.set_footer(text=f"Ava | version: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
+                color=discord.Colour.blurple(),
+                title=f"{lang.help_title} <:Ava_CatBlush:1210004576082853939>",
+                description=lang.help_description)
+            embed.set_footer(text=f"Ava | {lang.version}: {AVA_VERSION}", icon_url=config.FOOTER_ICON)
             await message.channel.send(embed=embed, view=Buttons())
-
 
 async def setup(client:commands.Bot) -> None:
     await client.add_cog(help(client))

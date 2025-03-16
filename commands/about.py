@@ -2,9 +2,8 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import config
-from userLocale import getLang
-import importlib
 import credits
+from i18n import i18n
 
 class about(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -14,15 +13,8 @@ class about(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=True)
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def about(self, interaction: discord.Interaction):
-        ### LANG SECTION ###
-        user_locale = getLang(interaction.user.id)
-        lang_module = f"lang.about.{user_locale}"
-        try:
-            lang = importlib.import_module(lang_module)
-        except ModuleNotFoundError:
-            import lang.cats.en_US as lang
-            print(f"[!] Error loading language file. Defaulting to en_US | File not found: {lang_module} | User locale: {user_locale}")
-        ### END OF LANG SECTION ###
+        user_locale = i18n.get_locale(interaction.user.id)
+        lang = i18n.get_module('about', user_locale)
         
         try:
             embed = discord.Embed(
@@ -35,7 +27,7 @@ class about(commands.Cog):
             await interaction.response.send_message(embed=embed)
         except Exception as e:
             print(e)
-            await interaction.followup.send(content='Error occured.')
+            await interaction.followup.send(content='Error occurred.')
 
-async def setup(client:commands.Bot) -> None:
+async def setup(client: commands.Bot):
     await client.add_cog(about(client))
