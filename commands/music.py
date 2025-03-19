@@ -33,6 +33,11 @@ RADIO_STATIONS = {
         "url": "https://icecast.omroep.nl/funx-bb-mp3",
         "name": "[NL] FunX NL",
         "description": "De beste Nederlandse hits en urban muziek, non-stop!"
+    },
+    "nl_slam": {
+        "url": "https://stream.slam.nl/slam_mp3",
+        "name": "[NL] Slam!",
+        "description": "De beste dance hits en non-stop dance muziek!"
     }
 }
 
@@ -492,7 +497,8 @@ class MusicCog(commands.Cog):
         app_commands.Choice(name="[NL] BNR Nieuwsradio", value="nl_bnr"),
         app_commands.Choice(name="[NL] FunX Fissa", value="nl_funx_fissa"),
         app_commands.Choice(name="[NL] FunX Hip Hop", value="nl_funx_hiphop"),
-        app_commands.Choice(name="[NL] FunX NL", value="nl_funx_nl")
+        app_commands.Choice(name="[NL] FunX NL", value="nl_funx_nl"),
+        app_commands.Choice(name="[NL] Slam!", value="nl_slam")
     ])
     async def radio(self, interaction: discord.Interaction, station: str):
         lang = get_lang_module(interaction.user.id)
