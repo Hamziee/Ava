@@ -31,7 +31,7 @@
     "leaderboard_description": "Top 10 Cei Mai Bogați Utilizatori",
     "unknown_user": "Utilizator Necunoscut",
     "work_title": "💼 Muncă",
-    "work_cooldown": "Poți munci doar o dată la 10 minute!",
+    "work_cooldown": "Poți munci doar o dată la 5 minute!",
     "work_success": "Ai muncit din greu și ai câștigat {earnings} {currency}!",
     "pay_title": "💸 Tranzacție",
     "pay_self_error": "Nu poți să îți plătești ție însuți!",

@@ -101,7 +101,7 @@ def log_transaction(sender_id: int, recipient_id: int, amount: float):
     conn.close()
 
 def can_work(user_id: int) -> bool:
-    """Check if user can work (10-minute cooldown)."""
+    """Check if user can work (5-minute cooldown)."""
     conn = get_economy_connection()
     c = conn.cursor()
     c.execute("SELECT last_work, work_streak FROM user_economy WHERE user_id = %s", (user_id,))
@@ -115,7 +115,7 @@ def can_work(user_id: int) -> bool:
     if not last_work:
         return True
     
-    return datetime.now() - last_work >= timedelta(minutes=10)
+    return datetime.now() - last_work >= timedelta(minutes=5)
 
 def update_work_status(user_id: int, earnings: float):
     """Update work status after successful work."""

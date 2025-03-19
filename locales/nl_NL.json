@@ -31,7 +31,7 @@
     "leaderboard_description": "Top 10 Rijkste Gebruikers",
     "unknown_user": "Onbekende Gebruiker",
     "work_title": "💼 Werk",
-    "work_cooldown": "Je kunt maar één keer per 10 minuten werken!",
+    "work_cooldown": "Je kunt maar één keer per 5 minuten werken!",
     "work_success": "Je hebt hard gewerkt en {earnings} {currency} verdiend!",
     "pay_title": "💸 Transactie",
     "pay_self_error": "Je kunt niet aan jezelf betalen!",
