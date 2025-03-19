@@ -1,4 +1,4 @@
-AVA_VERSION = 'v1.0.1-beta' # Do not change this, it will help with troubleshooting later
+AVA_VERSION = 'v1.0.1-stable' # Do not change this, it will help with troubleshooting later
 CONFIG_VERSION = 5 # Do not change this, it will help with troubleshooting later
 
 # Required Bot Configuration
