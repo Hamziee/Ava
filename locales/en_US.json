@@ -31,7 +31,7 @@
     "leaderboard_description": "Top 10 Richest Users",
     "unknown_user": "Unknown User",
     "work_title": "💼 Work",
-    "work_cooldown": "You can only work once every 10 minutes!",
+    "work_cooldown": "You can only work once every 5 minutes!",
     "work_success": "You worked hard and earned {earnings} {currency}!",
     "pay_title": "💸 Transaction",
     "pay_self_error": "You can't pay yourself!",
