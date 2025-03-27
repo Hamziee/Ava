@@ -67,7 +67,6 @@
     "typeracer_correct": "🎉 Bravo! Ai tastat propoziția în**",
     "typeracer_correct2": "secunde**!",
     "typeracer_incorrect": "❌ Greșit! Ai făcut o eroare.",
-    "typeracter_timesup": "⏰ Timpul a expirat! Mai mult noroc data viitoare.",
     "ball_title": "🎱 Întrebare:",
     "ball_description": "**Răspuns:**",
     "ball_responses": [
@@ -83,7 +82,8 @@
       "Sursele mele spun nu."
     ],
     "version": "versiune",
-    "error": "A apărut o eroare."
+    "error": "A apărut o eroare.",
+    "typeracer_timesup": "⏰ Timpul a expirat! Mai mult noroc data viitoare."
   },
   "headpats": {
     "gives_headpats": "oferă mângâieri pe cap lui",
