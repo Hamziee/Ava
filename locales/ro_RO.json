@@ -45,8 +45,10 @@
     "blackjack_title": "🃏 Blackjack",
     "blackjack_result_title": "🃏 Rezultat Blackjack",
     "blackjack_your_hand": "Mâna Ta",
+    "blackjack_your_total": "Your Total",
     "blackjack_dealer_hand": "Mâna Dealer-ului",
     "blackjack_bet": "Pariu",
+    "blackjack_decision": "Type 'hit' to draw another card or 'stand' to keep your current hand.",
     "blackjack_result": "Rezultat",
     "blackjack_total": "Total",
     "blackjack_bust": "🃏 Bust! Ai depășit 21 și ai pierdut pariul.",
@@ -65,7 +67,6 @@
     "typeracer_correct": "🎉 Bravo! Ai tastat propoziția în**",
     "typeracer_correct2": "secunde**!",
     "typeracer_incorrect": "❌ Greșit! Ai făcut o eroare.",
-    "typeracter_timesup": "⏰ Timpul a expirat! Mai mult noroc data viitoare.",
     "ball_title": "🎱 Întrebare:",
     "ball_description": "**Răspuns:**",
     "ball_responses": [
@@ -81,7 +82,8 @@
       "Sursele mele spun nu."
     ],
     "version": "versiune",
-    "error": "A apărut o eroare."
+    "error": "A apărut o eroare.",
+    "typeracer_timesup": "⏰ Timpul a expirat! Mai mult noroc data viitoare."
   },
   "headpats": {
     "gives_headpats": "oferă mângâieri pe cap lui",

@@ -48,9 +48,9 @@
     "blackjack_your_total": "Jouw Totaal",
     "blackjack_dealer_hand": "Hand van de Dealer",
     "blackjack_bet": "Inzet",
+    "blackjack_decision": "Type 'hit' voor nog een kaart of 'stand' om te blijven staan.",
     "blackjack_result": "Resultaat",
     "blackjack_total": "Totaal",
-    "blackjack_decision": "Type 'hit' voor nog een kaart of 'stand' om te blijven staan.",
     "blackjack_bust": "🃏 Bust! Je bent over de 21 gegaan en hebt je inzet verloren.",
     "blackjack_dealer_bust": "🎉 Je wint! De dealer is over de 21 gegaan.",
     "blackjack_win_higher": "🎉 Je wint! Jouw hand ({player_total}) is hoger dan die van de dealer ({dealer_total}).",
@@ -67,7 +67,6 @@
     "typeracer_correct": "🎉 Goed gedaan! Je hebt de zin getypt in**",
     "typeracer_correct2": "seconden**!",
     "typeracer_incorrect": "❌ Fout! Je hebt een typefout gemaakt.",
-    "typeracer_timesup": "⏰ Tijd is om! Volgende keer beter.",
     "ball_title": "🎱 Vraag:",
     "ball_description": "**Antwoord:**",
     "ball_responses": [
@@ -83,7 +82,8 @@
       "Mijn bronnen zeggen van niet."
     ],
     "version": "versie",
-    "error": "Er is een fout opgetreden."
+    "error": "Er is een fout opgetreden.",
+    "typeracer_timesup": "⏰ Tijd is over! Beter geluk volgende keer."
   },
   "headpats": {
     "gives_headpats": "geeft hoofdklopjes aan",
@@ -220,7 +220,7 @@
     "userinfo_notInAServer": "Niet in een server.",
     "userinfo_ID": "ID",
     "userinfo_username": "Gebruikersnaam",
-    "userinfo_bot": "Bot",
+    "userinfo_bot": "Robot",
     "userinfo_yes": "Ja",
     "userinfo_no": "Nee",
     "userinfo_downloads": "Downloads",
