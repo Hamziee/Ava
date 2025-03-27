@@ -104,7 +104,7 @@ class Games(commands.Cog):
                 else:
                     await interaction.followup.send(content=lang.typeracer_incorrect)
             except asyncio.TimeoutError:
-                await interaction.followup.send(content=lang.typeracter_timesup)
+                await interaction.followup.send(content=lang.typeracer_timesup)
 
         except Exception as e:
             print(e)
