@@ -67,7 +67,6 @@
     "typeracer_correct": "🎉 Goed gedaan! Je hebt de zin getypt in**",
     "typeracer_correct2": "seconden**!",
     "typeracer_incorrect": "❌ Fout! Je hebt een typefout gemaakt.",
-    "typeracter_timesup": "⏰ Tijd is over! Beter geluk volgende keer.",
     "ball_title": "🎱 Vraag:",
     "ball_description": "**Antwoord:**",
     "ball_responses": [
@@ -83,7 +82,8 @@
       "Mijn bronnen zeggen van niet."
     ],
     "version": "versie",
-    "error": "Er is een fout opgetreden."
+    "error": "Er is een fout opgetreden.",
+    "typeracer_timesup": "⏰ Tijd is over! Beter geluk volgende keer."
   },
   "headpats": {
     "gives_headpats": "geeft hoofdklopjes aan",
