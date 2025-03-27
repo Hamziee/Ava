@@ -67,7 +67,6 @@
     "typeracer_correct": "🎉 Well done! You typed the sentence in**",
     "typeracer_correct2": "seconds**!",
     "typeracer_incorrect": "❌ Incorrect! You made a mistake.",
-    "typeracter_timesup": "⏰ Time's up! Better luck next time.",
     "ball_title": "🎱 Question:",
     "ball_description": "**Answer:**",
     "ball_responses": [
@@ -83,7 +82,8 @@
       "My sources say no."
     ],
     "version": "version",
-    "error": "An error occurred."
+    "error": "An error occurred.",
+    "typeracer_timesup": "⏰ Time's up! Better luck next time."
   },
   "headpats": {
     "gives_headpats": "gives head pats to",
