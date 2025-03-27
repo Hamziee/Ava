@@ -1,42 +1,42 @@
 {
   "about": {
-    "title": "Hi I'm Ava! <:Ava_CatBlush:1210004576082853939>",
-    "description": "Ava is a versatile, open-source Discord bot designed to effortlessly meet all your entertainment needs. With Ava, entertaining your server members becomes a breeze. From music to fun utilities, Ava has everything covered. Embrace simplicity and functionality with Ava, the reliable companion for any Discord community.\n### [Request Feature](https://github.com/Hamziee/Ava/issues/new) **|** [Github](https://github.com/Hamziee/Ava>) **|** [Maintainer](<https://github.com/Hamziee/>) \n[Hosted by HEO Systems](<https://heo-systems.net>)\n\n**Developer Note:** Ava is currently a work in progress, and I am working on adding new and exciting features to Ava. Please bear in mind that this is a project of mine that I work on in my free time, so don't expect fast progress. - Hamza",
-    "lang_nltrans": "Dutch Translators",
-    "lang_rotrans": "Romanian Translators",
-    "version": "version"
+    "title": "مرحبا أنا افا! <:Ava_CatBlush:1210004576082853939>",
+    "description": "افا هي بوت ديسكورد متعدد الاستخدامات ومفتوح المصدر مصممة لتلبية جميع احتياجاتك الترفيهية بسهولة. مع افا، يصبح ترفيه أعضاء الخادم الخاص بك أمرا سهلاً للغاية. من الموسيقى إلى الأدوات الممتعة، تغطي افا كل شيء. احتضن البساطة والوظائف مع افا، الرفيقة الموثوقة بها لأي مجتمع ديسكورد.\n### [طلب ميزة](https://github.com/Hamziee/Ava/issues/new) **|** [Github](https://github.com/Hamziee/Ava>) **|** [المشرف](<https://github.com/Hamziee/>) \n[مستضافة بواسطة HEO Systems](<https://heo-systems.net>)\n\n**ملاحظة المطور:** افا حاليا قيد التطوير، وأعمل على إضافة ميزات جديدة ومثيرة لافا. يرجى الأخذ في الاعتبار أن هذا مشروع شخصي أعمل عليه في وقت فراغي، لذا لا تتوقع تقدما سريعا. - Hamza",
+    "lang_nltrans": "المترجمون الهولنديون",
+    "lang_rotrans": "المترجمون الرومانيون",
+    "version": "الإصدار"
   },
   "cats": {
-    "title": "Important Message:",
+    "title": "رسالة هامة:",
     "description": "Currently the bot uses TheCatAPI which is not free to use, that's why Hamzie API (the source of most images Ava uses) is making their own cat's section, free to use for everyone. We ask you to send in your best cat pictures, for it to be used in Hamzie API, which will eventually replace TheCatAPI in this command.",
     "noapikey": "The cats command is disabled due to missing thecatapi key. Please contact the bot owner.\n\nNote for bot owner: If you wish to hide this error, please put cats.py in the disabled_commands folder.",
-    "version": "version",
-    "by": "Image by"
+    "version": "الإصدار",
+    "by": "صورة بواسطة"
   },
   "dogs": {
-    "title": "A cute doggo for you!",
-    "version": "version",
-    "by": "Image by"
+    "title": "كلب لطيف لك!",
+    "version": "الإصدار",
+    "by": "صورة بواسطة"
   },
   "economy": {
-    "currency": "dollars",
-    "version": "version",
-    "balance_text": "Current balance",
-    "balance_title": "💰 {username}'s Balance",
+    "currency": "دولارات",
+    "version": "الإصدار",
+    "balance_text": "الرصيد الحالي",
+    "balance_title": "💰 رصيد {username}",
     "global_leaderboard_title": "🌍 Global Economy Leaderboard",
     "server_leaderboard_title": "📊 {server} Economy Leaderboard",
     "server_leaderboard_error": "Server leaderboard can only be viewed in a server!",
     "leaderboard_empty": "No users found in the leaderboard yet!",
     "leaderboard_error": "An error occurred while fetching the leaderboard. Please try again later.",
     "leaderboard_description": "Top 10 Richest Users",
-    "unknown_user": "Unknown User",
-    "work_title": "💼 Work",
+    "unknown_user": "مستخدم غير معروف",
+    "work_title": "💼 عمل",
     "work_cooldown": "You can only work once every 5 minutes!",
     "work_success": "You worked hard and earned {earnings} {currency}!",
-    "pay_title": "💸 Transaction",
-    "pay_self_error": "You can't pay yourself!",
-    "insufficient_balance": "Insufficient balance!",
-    "pay_success": "{sender} paid {recipient} {amount} {currency}",
+    "pay_title": "💸 معاملة",
+    "pay_self_error": "لا يمكنك الدفع لنفسك!",
+    "insufficient_balance": "الرصيد غير كافي!",
+    "pay_success": "{sender} دفع {recipient}{amount}{currency}",
     "coinflip_title": "🪙 Coinflip",
     "coinflip_invalid_choice": "Please choose either 'heads' or 'tails'!",
     "coinflip_win": "🎉 You won! It was {result}. You earned {winnings} {currency}!",
