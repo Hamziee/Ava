@@ -19,7 +19,7 @@ class Buttons(discord.ui.View):
         lang = i18n.get_module('xiaojie', user_locale)
         try:
             async with httpx.AsyncClient() as client:
-                response = await client.get("https://api.hamzie.site/v1/images/xiaojie")
+                response = await client.get("https://services-api.hamzie.net/v1/images/xiaojie")
                 response.raise_for_status()
                 data = response.json()
                 image_url = data["link"]
@@ -29,7 +29,7 @@ class Buttons(discord.ui.View):
                     color=discord.Colour.blurple()
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.site/api", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.net/api", icon_url=config.FOOTER_ICON)
 
                 await interaction.response.send_message(embed=embed, view=Buttons())
         except httpx.HTTPError as http_err:
@@ -51,7 +51,7 @@ class xiaojie(commands.Cog):
         lang = i18n.get_module('xiaojie', user_locale)
         try:
             async with httpx.AsyncClient() as client:
-                response = await client.get("https://api.hamzie.site/v1/images/xiaojie")
+                response = await client.get("https://services-api.hamzie.net/v1/images/xiaojie")
                 response.raise_for_status()
                 data = response.json()
                 image_url = data["link"]
@@ -61,7 +61,7 @@ class xiaojie(commands.Cog):
                     color=discord.Colour.blurple()
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.site/api", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.net/api", icon_url=config.FOOTER_ICON)
 
                 await interaction.response.send_message(embed=embed, view=Buttons())
         except httpx.HTTPError as http_err:
