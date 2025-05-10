@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/badge/LICENSE-BSD--3--Clause-blue)](#license)
 [![Issues - daytona](https://img.shields.io/github/issues/Hamziee/Ava)](https://github.com/Hamziee/Ava/issues)
 [![GitHub Release](https://img.shields.io/github/v/release/Hamziee/Ava)](https://github.com/Hamziee/Ava/releases)
+[![Crowdin](https://badges.crowdin.net/ava-discord/localized.svg)](https://crowdin.com/project/ava-discord)
 <br>
 [![Add me](https://img.shields.io/badge/Add_Me_To_Your_Server-A?style=for-the-badge&color=blue)](https://discord.com/oauth2/authorize?client_id=1209925239652356147&permissions=70368744177655&scope=bot)
 
