@@ -10,9 +10,6 @@ class Buttons(discord.ui.View):
     def __init__(self, *, timeout=180):
         super().__init__(timeout=timeout)
 
-        # Add the submit cat button with a URL
-        self.add_item(discord.ui.Button(label="Submit Your Cat!", style=discord.ButtonStyle.link, url="https://upload-api.hamzie.site/"))
-
     @discord.ui.button(label="Run the command again!", style=discord.ButtonStyle.primary)
     async def rerun_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         user_locale = i18n.get_locale(interaction.user.id)

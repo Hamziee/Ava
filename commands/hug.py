@@ -19,7 +19,7 @@ class hug(commands.Cog):
 
         try:
             async with httpx.AsyncClient() as client:
-                response = await client.get("https://api.hamzie.site/v1/gifs/hug")
+                response = await client.get("https://services-api.hamzie.net/v1/gifs/hug")
                 response.raise_for_status()
                 data = response.json()
                 image_url = data["link"]
@@ -37,7 +37,7 @@ class hug(commands.Cog):
                     description=desctxt
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.site/api", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.net/api", icon_url=config.FOOTER_ICON)
                 await interaction.response.send_message(embed=embed)
 
         except httpx.HTTPError as http_err:

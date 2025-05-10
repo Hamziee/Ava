@@ -20,7 +20,7 @@ class Slap(commands.Cog):
         try:
             async with httpx.AsyncClient() as client:
                 if member.id == interaction.user.id:
-                    response = await client.get("https://api.hamzie.site/v1/gifs/hug")
+                    response = await client.get("https://services-api.hamzie.net/v1/gifs/hug")
                     response.raise_for_status()
                     data = response.json()
                     image_url = data["link"]
@@ -28,11 +28,11 @@ class Slap(commands.Cog):
                         color=discord.Colour.blurple()
                     )
                     embed.set_image(url=image_url)
-                    embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
+                    embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.net/api", icon_url=config.FOOTER_ICON)
                     await interaction.response.send_message(content=lang.slap_toself, embed=embed)
                     return
                 elif member.id == config.BOT_ID:
-                    response = await client.get("https://api.hamzie.site/v1/gifs/hug")
+                    response = await client.get("https://services-api.hamzie.net/v1/gifs/hug")
                     response.raise_for_status()
                     data = response.json()
                     image_url = data["link"]
@@ -40,11 +40,11 @@ class Slap(commands.Cog):
                         color=discord.Colour.blurple()
                     )
                     embed.set_image(url=image_url)
-                    embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
+                    embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.net/api", icon_url=config.FOOTER_ICON)
                     await interaction.response.send_message(content=lang.slap_toava, embed=embed)
                     return
 
-                response = await client.get("https://api.hamzie.site/v1/gifs/slap")
+                response = await client.get("https://services-api.hamzie.net/v1/gifs/slap")
                 response.raise_for_status()
                 data = response.json()
                 image_url = data["link"]
@@ -53,7 +53,7 @@ class Slap(commands.Cog):
                     description=f"{interaction.user.mention} {lang.gives_slap} {member.mention}"
                 )
                 embed.set_image(url=image_url)
-                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: api.hamzie.site", icon_url=config.FOOTER_ICON)
+                embed.set_footer(text=f"Ava | {lang.version}: {config.AVA_VERSION} - {lang.by}: hamzie.net/api", icon_url=config.FOOTER_ICON)
                 await interaction.response.send_message(embed=embed)
 
         except httpx.HTTPError as http_err:

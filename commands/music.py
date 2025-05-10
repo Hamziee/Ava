@@ -9,6 +9,11 @@ from i18n import i18n
 
 # Radio stations dictionary, alphabetically sorted with EN first
 RADIO_STATIONS = {
+    "en_hamzieapi_nonstoppopfm": {
+        "url": "https://services-api.hamzie.net/v1/streams/gtav/nonstoppopfm",
+        "name": "[EN] [GTAV] Non-Stop-Pop FM - By hamzie.net/api",
+        "description": "Pop hits from the 80s, 90s, Noughties, and today."
+    },
     "en_truckersfm": {
         "url": "https://radio.truckers.fm/",
         "name": "[EN] TruckersFM",
@@ -493,6 +498,7 @@ class MusicCog(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=False)
     @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     @app_commands.choices(station=[
+        app_commands.Choice(name="[EN] [GTAV] Non-Stop-Pop FM", value="en_hamzieapi_nonstoppopfm"),
         app_commands.Choice(name="[EN] TruckersFM", value="en_truckersfm"),
         app_commands.Choice(name="[NL] BNR Nieuwsradio", value="nl_bnr"),
         app_commands.Choice(name="[NL] FunX Fissa", value="nl_funx_fissa"),
