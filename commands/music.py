@@ -9,10 +9,25 @@ from i18n import i18n
 
 # Radio stations dictionary, alphabetically sorted with EN first
 RADIO_STATIONS = {
+    "en_hamzieapi_eastlosfm": {
+        "url": "https://services-api.hamzie.net/v1/streams/gtav/eastlosfm",
+        "name": "[EN] [GTAV] East Los FM - By hamzie.net/api",
+        "description": "Mexican electronica mixing corridos and traditional songs with hip hop, rock, and ska."
+    },
     "en_hamzieapi_nonstoppopfm": {
         "url": "https://services-api.hamzie.net/v1/streams/gtav/nonstoppopfm",
         "name": "[EN] [GTAV] Non-Stop-Pop FM - By hamzie.net/api",
         "description": "Pop hits from the 80s, 90s, Noughties, and today."
+    },
+    "en_hamzieapi_radiolosantos": {
+        "url": "https://services-api.hamzie.net/v1/streams/gtav/radiolosantos",
+        "name": "[EN] [GTAV] Radio Los Santos - By hamzie.net/api",
+        "description": "Contemporary hip-hop and rap music station."
+    },
+    "en_hamzieapi_westcoastclassics": {
+        "url": "https://services-api.hamzie.net/v1/streams/gtav/westcoastclassics",
+        "name": "[EN] [GTAV] West Coast Classics - By hamzie.net/api",
+        "description": "Coming at you from the city of Davis - music from the days of the pager."
     },
     "en_truckersfm": {
         "url": "https://radio.truckers.fm/",
@@ -498,7 +513,10 @@ class MusicCog(commands.Cog):
     @app_commands.allowed_installs(guilds=True, users=False)
     @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=True)
     @app_commands.choices(station=[
+        app_commands.Choice(name="[EN] [GTAV] East Los FM", value="en_hamzieapi_eastlosfm"),
         app_commands.Choice(name="[EN] [GTAV] Non-Stop-Pop FM", value="en_hamzieapi_nonstoppopfm"),
+        app_commands.Choice(name="[EN] [GTAV] Radio Los Santos", value="en_hamzieapi_radiolosantos"),
+        app_commands.Choice(name="[EN] [GTAV] West Coast Classics", value="en_hamzieapi_westcoastclassics"),
         app_commands.Choice(name="[EN] TruckersFM", value="en_truckersfm"),
         app_commands.Choice(name="[NL] BNR Nieuwsradio", value="nl_bnr"),
         app_commands.Choice(name="[NL] FunX Fissa", value="nl_funx_fissa"),
