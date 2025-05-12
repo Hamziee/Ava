@@ -7,6 +7,7 @@ disabled commands/AvaAI.py
 disabled commands/AvaGroupAI
 disabled commands/AvaGroupAI.py
 ai database
+cookies.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
