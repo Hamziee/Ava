@@ -6,6 +6,7 @@ from discord import app_commands
 import yt_dlp as youtube_dl
 import config
 from i18n import i18n
+import os
 
 # Radio stations dictionary, alphabetically sorted with EN first
 RADIO_STATIONS = {
@@ -78,7 +79,7 @@ YTDL_OPTIONS = {
 }
 
 FFMPEG_OPTIONS = {
-    "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+    "before_options": "-cookies cookies.txt -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
     "options": "-vn"
 }
 ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
