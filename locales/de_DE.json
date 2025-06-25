@@ -53,7 +53,7 @@
     "blackjack_total": "Gesamt",
     "blackjack_bust": "🃏 Sie sind über 21 gegangen und haben Ihren Einsatz verloren.",
     "blackjack_dealer_bust": "🎉 Sie haben gewonnen!",
-    "blackjack_win_higher": "🎉 You win! Your hand ({player_total}) is higher than the dealer's ({dealer_total}).",
+    "blackjack_win_higher": "🎉 Du gewinnst! Deine Hand ({player_total}) ist höher als die des Dealers ({dealer_total}).",
     "blackjack_lose_lower": "😢 Händler gewinnt. Ihre Hand ({player_total}) ist niedriger als der Dealer ({dealer_total}).",
     "blackjack_push": "📊 Push! Es ist ein Krawatt, bei dem beide {total} haben.",
     "blackjack_timeout": "⏰ Spiel Timeout. Keine Aktion durchgeführt."
