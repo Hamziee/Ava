@@ -1,4 +1,4 @@
-AVA_VERSION = 'v1.0.4-stable' # Do not change this, it will help with troubleshooting later
+AVA_VERSION = 'v1.0.5-stable' # Do not change this, it will help with troubleshooting later
 CONFIG_VERSION = 5 # Do not change this, it will help with troubleshooting later
 
 # Required Bot Configuration
@@ -15,7 +15,7 @@ TOKEN = 'Put your Discord bot token here.'
 COMMANDS_DIRECTORY = 'commands'
 
 # Database Configuration (If every DB is on the same server, you can use these variables. If not, you can use the HOST & PORT variables in each DB.)
-DB_HOST = 'hamzie.site'
+DB_HOST = 'hamzie.net'
 DB_PORT = 3306
 
 # Locale Database
