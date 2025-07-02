@@ -34,7 +34,7 @@ class Client(commands.Bot):
             await self.load_extension(ext)
 
     async def _check_version(self) -> None:
-        url = "https://services-api.hamzie.net/Ava/VRC/core.txt"
+        url = "https://services-cdn.hamzie.net/Ava/VRC/core.txt"
         try:
             response = requests.get(url)
             if response.status_code == 200:
