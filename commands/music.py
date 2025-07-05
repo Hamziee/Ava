@@ -217,7 +217,7 @@ class VoiceState:
         """Announce the currently playing song in the specified channel."""
         if self.current:
             # Using the default en_US language for announcements
-            lang = get_lang_module(self.current["requester_id"])
+            lang = i18n.get_module('music', 'en_US')
             embed = MusicCog.create_embed(
                 lang.now_playing,
                 f"{lang.song_info.format(title=self.current['title'], url=self.current['url'], author=self.current['author'], requester=self.current['requester'], duration=self.current['duration'])}",
