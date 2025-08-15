@@ -22,7 +22,7 @@
     "currency": "долларов",
     "version": "версия",
     "balance_text": "Текущий баланс",
-    "balance_title": "💰 {username}'s Balance",
+    "balance_title": "💰 Баланс {username}",
     "global_leaderboard_title": "🌍 Лидер мировой экономики",
     "server_leaderboard_title": "📊 Экономика {server}",
     "server_leaderboard_error": "Список лидеров сервера можно просмотреть только на сервере!",
