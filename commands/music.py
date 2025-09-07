@@ -80,8 +80,8 @@ YTDL_OPTIONS = {
 }
 
 FFMPEG_OPTIONS = {
-    "before_options": "-cookies cookies.txt -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-    "options": "-vn"
+    "before_options": "-cookies cookies.txt -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5 -buffer_size 16384k",
+    "options": "-vn -ar 96000 -ac 2 -b:a 384k -bufsize 6144k -maxrate 384k -acodec libopus -application audio"
 }
 ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
 
