@@ -80,8 +80,8 @@ YTDL_OPTIONS = {
 }
 
 FFMPEG_OPTIONS = {
-    "before_options": "-cookies cookies.txt -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-    "options": "-vn"
+    "before_options": "-cookies cookies.txt -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5 -buffer_size 16384k",
+    "options": "-vn -ar 96000 -ac 2 -b:a 384k -bufsize 6144k -maxrate 384k -acodec libopus -application audio"
 }
 ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
 
@@ -217,10 +217,10 @@ class VoiceState:
         """Announce the currently playing song in the specified channel."""
         if self.current:
             # Using the default en_US language for announcements
-            lang = get_lang_module(self.current["requester_id"])
+            lang = i18n.get_module('music', 'en_US')
             embed = MusicCog.create_embed(
                 lang.now_playing,
-                f"{lang.song_info.format(title=self.current['title'], url=self.current['url'], author=self.current['author'], requester=self.current['requester'], duration=self.current['duration'])}",
+                f"{lang.song_info.format(title=self.current['title'], url=self.current.get('webpage_url', self.current['url']), author=self.current['author'], requester=self.current['requester'], duration=self.current['duration'])}",
                 discord.Color.green()
             )
             await channel.send(embed=embed)
@@ -281,7 +281,7 @@ class MusicCog(commands.Cog):
                 lang.now_playing,
                 lang.song_info.format(
                     title=state.current['title'],
-                    url=state.current['url'],
+                    url=state.current.get('webpage_url', state.current['url']),
                     author=state.current['author'],
                     requester=state.current['requester'],
                     duration=state.current['duration']
@@ -393,7 +393,8 @@ class MusicCog(commands.Cog):
                     continue
                     
                 song = {
-                    "url": entry["url"],
+                    "url": entry["url"],  # For playback
+                    "webpage_url": entry.get("webpage_url", query),  # For display/click
                     "title": entry.get("title", "Unknown Title"),
                     "duration": entry.get("duration", "Unknown"),
                     "author": entry.get("uploader", "Unknown"),
@@ -406,7 +407,7 @@ class MusicCog(commands.Cog):
                     lang.song_added,
                     lang.song_info.format(
                         title=song['title'],
-                        url=song['url'],
+                        url=song['webpage_url'],
                         author=song['author'],
                         requester=song['requester'],
                         duration=song['duration']
@@ -459,7 +460,7 @@ class MusicCog(commands.Cog):
             return
 
         queue = list(state.queue._queue)
-        items_per_page = 10
+        items_per_page = 5
         max_pages = (len(queue) + items_per_page - 1) // items_per_page
 
         if page < 1 or page > max_pages:
@@ -474,18 +475,29 @@ class MusicCog(commands.Cog):
 
         start = (page - 1) * items_per_page
         end = start + items_per_page
-        queue_str = "\n".join(
-            [
-                f"{i+1}. {lang.song_info.format(title=song['title'], url=song['url'], author=song['author'], requester=song['requester'], duration=song['duration'])}"
-                for i, song in enumerate(queue[start:end], start=start)
-            ]
-        )
+        page_songs = queue[start:end]
+
         embed = self.create_embed(
             lang.queue_title, 
-            lang.queue_page.format(page=page, max_pages=max_pages, queue_str=queue_str),
+            lang.queue_page.format(page=page, max_pages=max_pages, queue_str=""),  # We'll use fields, not description for songs
             discord.Color.blue(),
             lang
         )
+
+        for i, song in enumerate(page_songs, start=start):
+            field_name = f"{i+1}. {song['title']}"
+            field_value = lang.song_info.format(
+                title=song['title'],
+                url=song['webpage_url'],
+                author=song['author'],
+                requester=song['requester'],
+                duration=song['duration']
+            )
+            # Truncate field_value to 1024 characters if necessary
+            if len(field_value) > 1024:
+                field_value = field_value[:1021] + '...'
+            embed.add_field(name=field_name, value=field_value, inline=False)
+
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="leave", description="Leave the voice channel and clear the queue.")
